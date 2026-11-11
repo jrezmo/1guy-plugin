@@ -1,0 +1,2790 @@
+{
+ "blocks": [
+  {
+   "actions": [
+    {
+     "body": {
+      "number": 214,
+      "verdict": "approve"
+     },
+     "id": "approve",
+     "label": "approve",
+     "post": "/api/review/verdict"
+    },
+    {
+     "body": {
+      "number": 214,
+      "verdict": "steer"
+     },
+     "id": "steer",
+     "label": "steer",
+     "note": true,
+     "post": "/api/review/verdict"
+    },
+    {
+     "body": {
+      "number": 214,
+      "verdict": "reject"
+     },
+     "id": "reject",
+     "label": "reject",
+     "note": true,
+     "post": "/api/review/verdict"
+    },
+    {
+     "href": "https://example.invalid/pr/214",
+     "id": "github",
+     "label": "open on github"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.882,
+   "detail": {
+    "author": "maya",
+    "body": "Maya opened this against the sync worker. Adds exponential backoff (max 5 tries) and a dead-letter log. Tests pass; the diff is 86 lines.",
+    "comments": 2,
+    "labels": [
+     "pull-request",
+     "decision"
+    ],
+    "number": 214,
+    "url": "https://example.invalid/pr/214",
+    "verdict": null
+   },
+   "due": null,
+   "for_you": true,
+   "id": "crew:214",
+   "inbox": {
+    "group": "decide",
+    "since": "2026-11-10T17:15:39-05:00",
+    "verbs": [
+     {
+      "id": "approve",
+      "label": "approve"
+     },
+     {
+      "id": "steer",
+      "label": "steer"
+     },
+     {
+      "id": "reject",
+      "label": "reject"
+     }
+    ],
+    "why": "needs your verdict"
+   },
+   "kind": "crew",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "214",
+    "type": "github-issue",
+    "url": "https://example.invalid/pr/214"
+   },
+   "status": "needs-you",
+   "summary": "Maya opened this against the sync worker. Adds exponential backoff (max 5 tries) and a dead-letter log. Tests pass; the diff is 86 lines.",
+   "tags": [
+    "pull-request",
+    "decision"
+   ],
+   "title": "Review the sync retries PR",
+   "updated": "2026-11-10T17:15:39-05:00",
+   "when": {
+    "at": "2026-11-10T17:15:39-05:00",
+    "kind": "activity"
+   },
+   "world": {
+    "kind": "waiting-on-you",
+    "lift": 0.12,
+    "line": "maya is waiting on your ok",
+    "since": 1794348939,
+    "src": "crew",
+    "who": "maya"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "a5ec680c01",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "a5ec680c01",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "a5ec680c01",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.82,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "Open questions / issues",
+    "tasklist_id": "a5ec680c01",
+    "text": "Run the database migration on staging? The deploy agent is waiting for a yes."
+   },
+   "due": null,
+   "for_you": true,
+   "id": "task:a5ec680c01",
+   "inbox": {
+    "group": "decide",
+    "verbs": [
+     {
+      "id": "surface",
+      "label": "talk it through"
+     },
+     {
+      "id": "done",
+      "label": "done"
+     }
+    ],
+    "why": "waiting on your answer"
+   },
+   "kind": "task",
+   "links": [
+    "project:work"
+   ],
+   "priority": 1,
+   "project": "project:work",
+   "source": {
+    "ref": "a5ec680c01",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "needs-you",
+   "summary": "Run the database migration on staging? The deploy agent is waiting for a yes.",
+   "tags": [
+    "needs-j",
+    "work"
+   ],
+   "title": "Run the database migration on staging? The deploy agent is waiting for a yes.",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "2c7bb243b4",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "2c7bb243b4",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "2c7bb243b4",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.8,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "2c7bb243b4",
+    "text": "Finish the billing refactor write-up"
+   },
+   "due": "2026-11-10",
+   "for_you": true,
+   "id": "task:2c7bb243b4",
+   "kind": "task",
+   "links": [
+    "project:work"
+   ],
+   "priority": 1,
+   "project": "project:work",
+   "source": {
+    "ref": "2c7bb243b4",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Finish the billing refactor write-up",
+   "tags": [
+    "work"
+   ],
+   "title": "Finish the billing refactor write-up",
+   "updated": null,
+   "when": {
+    "all_day": true,
+    "at": "2026-11-10",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.738,
+   "detail": {
+    "children": [
+     "task:a5ec680c01",
+     "task:2c7bb243b4",
+     "session:20261110_061502_a1b2c3",
+     "session:20261110_062211_d4e5f6",
+     "session:20261110_112004_c0ffee",
+     "session:20261109_173040_778899",
+     "session:20261110_023315_aabbcc",
+     "session:20261108_201010_ddeeff"
+    ],
+    "goal": null,
+    "horizon": null,
+    "next": null
+   },
+   "due": null,
+   "id": "project:work",
+   "kind": "project",
+   "links": [
+    "task:2c7bb243b4",
+    "task:a5ec680c01",
+    "session:20261110_061502_a1b2c3",
+    "session:20261109_173040_778899",
+    "session:20261110_062211_d4e5f6",
+    "session:20261110_112004_c0ffee",
+    "session:20261110_023315_aabbcc",
+    "session:20261108_201010_ddeeff"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "work",
+    "type": "derived",
+    "url": null
+   },
+   "status": "active",
+   "summary": "2 open tasks tagged #work",
+   "tags": [
+    "work"
+   ],
+   "title": "work",
+   "updated": "2026-11-10T20:14:39-05:00"
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "b9228fb563",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b9228fb563",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b9228fb563",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.73,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "b9228fb563",
+    "text": "School pickup"
+   },
+   "due": "2026-11-10T21:15",
+   "for_you": true,
+   "id": "task:b9228fb563",
+   "kind": "task",
+   "links": [],
+   "live": {
+    "kind": "conflict",
+    "line": "conflict: pickup overlaps the standup",
+    "session_id": null,
+    "since": 1794357941.365046,
+    "who": "the watcher"
+   },
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "b9228fb563",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "School pickup",
+   "tags": [],
+   "title": "School pickup",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-10T21:15",
+    "kind": "due"
+   },
+   "world": {
+    "kind": "conflict",
+    "lift": 0.18,
+    "line": "conflict: pickup overlaps the standup",
+    "since": 1794357941,
+    "src": "item",
+    "who": "the watcher"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "job_id": "nightly-backup",
+      "op": "run"
+     },
+     "confirm": "run “Nightly notes backup” now? it does real work (may send mail or post)",
+     "id": "run",
+     "label": "run now",
+     "post": "/api/board/job"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.678,
+   "detail": {
+    "deliver": "local",
+    "failure_streak": 1,
+    "job_id": "nightly-backup",
+    "last_output_excerpt": "backup disk full: 2.1 GB free, the archive needs 3.4 GB",
+    "last_run": "2026-11-10T03:00:00-05:00",
+    "last_status": "error",
+    "next_run": "2026-11-11T03:00:00-05:00",
+    "schedule": "every night at 3:00"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "job:nightly-backup",
+   "inbox": {
+    "group": "broke",
+    "since": "2026-11-10T03:00:00-05:00",
+    "verbs": [
+     {
+      "id": "run",
+      "label": "run it again"
+     },
+     {
+      "id": "surface",
+      "label": "talk it through"
+     }
+    ],
+    "why": "this broke"
+   },
+   "kind": "job",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "nightly-backup",
+    "type": "cron",
+    "url": null
+   },
+   "status": "failed",
+   "summary": "ran 03:00 · error · backup disk full: 2.1 GB free, the archive needs 3.4 GB",
+   "tags": [],
+   "title": "Nightly notes backup",
+   "updated": "2026-11-10T03:00:00-05:00",
+   "when": {
+    "at": "2026-11-11T03:00:00-05:00",
+    "kind": "scheduled"
+   },
+   "world": {
+    "kind": "failed",
+    "line": "last run broke",
+    "since": 1794297600,
+    "src": "job",
+    "who": "the routine"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "b210a7c37e",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b210a7c37e",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b210a7c37e",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.62,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "b210a7c37e",
+    "text": "Reply to Priya: can you do the offsite Oct 14-16?"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "task:b210a7c37e",
+   "inbox": {
+    "group": "decide",
+    "verbs": [
+     {
+      "id": "surface",
+      "label": "talk it through"
+     },
+     {
+      "id": "done",
+      "label": "done"
+     }
+    ],
+    "why": "waiting on your answer"
+   },
+   "kind": "task",
+   "links": [
+    "project:mail"
+   ],
+   "priority": null,
+   "project": "project:mail",
+   "source": {
+    "ref": "b210a7c37e",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "needs-you",
+   "summary": "Reply to Priya: can you do the offsite Oct 14-16?",
+   "tags": [
+    "mail",
+    "needs-you"
+   ],
+   "title": "Reply to Priya: can you do the offsite Oct 14-16?",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "64c0e601cb",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "64c0e601cb",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "64c0e601cb",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.596,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "carries the origin session's last turns",
+    "origin": {
+     "label": "coordinating",
+     "session_id": "20261110_112004_c0ffee"
+    },
+    "section": "To-do",
+    "tasklist_id": "64c0e601cb",
+    "text": "Offsite planning call with Priya"
+   },
+   "due": "2026-11-13T11:00",
+   "id": "task:64c0e601cb",
+   "kind": "task",
+   "links": [
+    "session:20261110_112004_c0ffee"
+   ],
+   "live": {
+    "kind": "running",
+    "line": "asking Priya for Thu or Fri",
+    "session_id": "20261110_112004_c0ffee",
+    "since": 1794352541.3650517,
+    "who": "the one guy"
+   },
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "64c0e601cb",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Offsite planning call with Priya",
+   "tags": [],
+   "title": "Offsite planning call with Priya",
+   "updated": "2026-11-10T11:20:04-05:00",
+   "when": {
+    "all_day": false,
+    "at": "2026-11-13T11:00",
+    "kind": "due"
+   },
+   "world": {
+    "kind": "running",
+    "line": "asking Priya for Thu or Fri",
+    "session_id": "20261110_112004_c0ffee",
+    "since": 1794352541,
+    "src": "item",
+    "who": "the one guy"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "379f4ff291",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "379f4ff291",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "379f4ff291",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.59,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "379f4ff291",
+    "text": "Dentist"
+   },
+   "due": "2026-11-12T15:00",
+   "id": "task:379f4ff291",
+   "kind": "task",
+   "links": [],
+   "live": {
+    "kind": "waiting-on-you",
+    "line": "dentist offered 3:15, waiting on you",
+    "session_id": null,
+    "since": 1794357941.3650506,
+    "who": "the dentist's office"
+   },
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "379f4ff291",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Dentist",
+   "tags": [],
+   "title": "Dentist",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-12T15:00",
+    "kind": "due"
+   },
+   "world": {
+    "kind": "waiting-on-you",
+    "lift": 0.12,
+    "line": "dentist offered 3:15, waiting on you",
+    "since": 1794357941,
+    "src": "item",
+    "who": "the dentist's office"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.558,
+   "detail": {
+    "children": [
+     "task:b210a7c37e",
+     "proposal:untangle-mail-to-dos",
+     "task:cda9e9fbab",
+     "task:2d585b78b3"
+    ],
+    "goal": null,
+    "horizon": null,
+    "next": null
+   },
+   "due": null,
+   "id": "project:mail",
+   "kind": "project",
+   "links": [
+    "task:b210a7c37e",
+    "task:cda9e9fbab",
+    "task:2d585b78b3",
+    "proposal:untangle-mail-to-dos"
+   ],
+   "priority": null,
+   "project": "project:mail",
+   "source": {
+    "ref": "mail",
+    "type": "derived",
+    "url": null
+   },
+   "status": "active",
+   "summary": "3 open tasks tagged #mail",
+   "tags": [
+    "mail"
+   ],
+   "title": "mail",
+   "updated": "2026-11-10T20:15:39-05:00"
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.55,
+   "detail": {
+    "children": [
+     "task:9fca134daf",
+     "proposal:untangle-chores-to-dos",
+     "task:cdcb26a5f7",
+     "task:b41f4db246",
+     "task:41fc5e53a0"
+    ],
+    "goal": null,
+    "horizon": null,
+    "next": null
+   },
+   "due": null,
+   "id": "project:chores",
+   "kind": "project",
+   "links": [
+    "task:cdcb26a5f7",
+    "task:b41f4db246",
+    "task:9fca134daf",
+    "task:41fc5e53a0",
+    "proposal:untangle-chores-to-dos"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "chores",
+    "type": "derived",
+    "url": null
+   },
+   "status": "active",
+   "summary": "4 open tasks tagged #chores",
+   "tags": [
+    "chores"
+   ],
+   "title": "chores",
+   "updated": "2026-11-10T20:15:39-05:00"
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "9f440cf259",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "9f440cf259",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "9f440cf259",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.55,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "9f440cf259",
+    "text": "Team standup"
+   },
+   "due": "2026-11-10T21:00",
+   "for_you": true,
+   "id": "task:9f440cf259",
+   "kind": "task",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "9f440cf259",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Team standup",
+   "tags": [],
+   "title": "Team standup",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-10T21:00",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "6d25928677",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "6d25928677",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "6d25928677",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.55,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "6d25928677",
+    "text": "Design review with Maya"
+   },
+   "due": "2026-11-10T22:15",
+   "for_you": true,
+   "id": "task:6d25928677",
+   "kind": "task",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "6d25928677",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Design review with Maya",
+   "tags": [],
+   "title": "Design review with Maya",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-10T22:15",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "f38de629d6",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "f38de629d6",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "f38de629d6",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.55,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "f38de629d6",
+    "text": "1:1 with Sam"
+   },
+   "due": "2026-11-11T09:00",
+   "id": "task:f38de629d6",
+   "kind": "task",
+   "links": [],
+   "live": {
+    "kind": "confirmed",
+    "line": "confirmed by Sam",
+    "session_id": null,
+    "since": 1794357941.3650491,
+    "who": "Sam"
+   },
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "f38de629d6",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "1:1 with Sam",
+   "tags": [],
+   "title": "1:1 with Sam",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-11T09:00",
+    "kind": "due"
+   },
+   "world": {
+    "kind": "confirmed",
+    "line": "confirmed by Sam",
+    "since": 1794357941,
+    "src": "item",
+    "who": "Sam"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "9fca134daf",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "9fca134daf",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "9fca134daf",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.55,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "9fca134daf",
+    "text": "Call the plumber about the kitchen tap"
+   },
+   "due": "2026-11-11",
+   "id": "task:9fca134daf",
+   "kind": "task",
+   "links": [
+    "project:chores"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "9fca134daf",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "active",
+   "summary": "Call the plumber about the kitchen tap",
+   "tags": [
+    "chores"
+   ],
+   "title": "Call the plumber about the kitchen tap",
+   "updated": null,
+   "when": {
+    "all_day": true,
+    "at": "2026-11-11",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "href": "",
+     "id": "open-list",
+     "label": "open the full list"
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "count": 17,
+    "items": [
+     {
+      "done": false,
+      "due": "2026-11-10T00:00:00-05:00",
+      "id": "2c7bb243b4",
+      "priority": 1,
+      "text": "Finish the billing refactor write-up"
+     },
+     {
+      "done": false,
+      "due": "2026-11-10T00:00:00-05:00",
+      "id": "9f440cf259",
+      "priority": null,
+      "text": "Team standup"
+     },
+     {
+      "done": false,
+      "due": "2026-11-10T00:00:00-05:00",
+      "id": "b9228fb563",
+      "priority": null,
+      "text": "School pickup"
+     },
+     {
+      "done": false,
+      "due": "2026-11-10T00:00:00-05:00",
+      "id": "6d25928677",
+      "priority": null,
+      "text": "Design review with Maya"
+     },
+     {
+      "done": false,
+      "due": "2026-11-11T00:00:00-05:00",
+      "id": "f38de629d6",
+      "priority": null,
+      "text": "1:1 with Sam"
+     },
+     {
+      "done": false,
+      "due": "2026-11-11T00:00:00-05:00",
+      "id": "9fca134daf",
+      "priority": null,
+      "text": "Call the plumber about the kitchen tap"
+     },
+     {
+      "done": false,
+      "due": "2026-11-12T00:00:00-05:00",
+      "id": "379f4ff291",
+      "priority": null,
+      "text": "Dentist"
+     },
+     {
+      "done": false,
+      "due": "2026-11-13T00:00:00-05:00",
+      "id": "64c0e601cb",
+      "priority": null,
+      "text": "Offsite planning call with Priya"
+     }
+    ],
+    "next": {
+     "done": false,
+     "due": "2026-11-10T00:00:00-05:00",
+     "id": "2c7bb243b4",
+     "priority": 1,
+     "text": "Finish the billing refactor write-up"
+    },
+    "overdue": 4,
+    "widget": "todo",
+    "wired": true
+   },
+   "due": null,
+   "id": "widget:todo",
+   "kind": "widget",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "todo",
+    "type": "tasklist",
+    "url": ""
+   },
+   "status": "active",
+   "summary": "17 open · 4 overdue; next: Finish the billing refactor write-up",
+   "tags": [
+    "housekeeping"
+   ],
+   "title": "to-do",
+   "updated": "2026-11-10T20:15:41-05:00"
+  },
+  {
+   "actions": [],
+   "attention": 0.5,
+   "detail": {
+    "count": 3,
+    "items": [
+     {
+      "date": "2026-11-10T19:05:39-05:00",
+      "from": "Priya Nair <priya@example.invalid>",
+      "id": "m1",
+      "subject": "Offsite dates: can you do Oct 14-16?",
+      "unread": true
+     },
+     {
+      "date": "2026-11-10T17:15:39-05:00",
+      "from": "Dana at Fernwood Print <dana@example.invalid>",
+      "id": "m2",
+      "subject": "Your quote for 200 notebooks",
+      "unread": true
+     },
+     {
+      "date": "2026-11-10T15:15:39-05:00",
+      "from": "Maya Ortiz <maya@example.invalid>",
+      "id": "m3",
+      "subject": "Quick question on the sync retry PR",
+      "unread": true
+     }
+    ],
+    "next": {
+     "due": null,
+     "text": "Offsite dates: can you do Oct 14-16?"
+    },
+    "readonly": true,
+    "total": 41,
+    "unread": 3,
+    "widget": "email",
+    "wired": true
+   },
+   "due": null,
+   "id": "widget:email",
+   "kind": "widget",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "email",
+    "type": "gmail-readonly",
+    "url": null
+   },
+   "status": "active",
+   "summary": "3 unread · latest: Offsite dates: can you do Oct 14-16?",
+   "tags": [
+    "housekeeping"
+   ],
+   "title": "email",
+   "updated": "2026-11-10T20:15:41-05:00"
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "untangle-chores-to-dos",
+      "op": "keep",
+      "writer": "untangle"
+     },
+     "id": "keep",
+     "label": "move them",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "body": {
+      "id": "untangle-chores-to-dos",
+      "op": "dismiss",
+      "writer": "untangle"
+     },
+     "id": "dismiss",
+     "label": "not now",
+     "post": "/api/brain/proposal"
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "created": "2026-11-10T20:15:39-05:00",
+    "draft": null,
+    "edits": [
+     {
+      "id": "task:9fca134daf",
+      "op": "move",
+      "to_pile": "pile:chores-to-dos"
+     },
+     {
+      "id": "task:cdcb26a5f7",
+      "op": "move",
+      "to_pile": "pile:chores-to-dos"
+     },
+     {
+      "id": "task:b41f4db246",
+      "op": "move",
+      "to_pile": "pile:chores-to-dos"
+     },
+     {
+      "id": "task:41fc5e53a0",
+      "op": "move",
+      "to_pile": "pile:chores-to-dos"
+     }
+    ],
+    "evidence": [],
+    "kind": "pile",
+    "why": "4 to-dos that all say chores",
+    "writer": "untangle"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "proposal:untangle-chores-to-dos",
+   "inbox": {
+    "group": "idea",
+    "since": "2026-11-10T20:15:39-05:00",
+    "verbs": [
+     {
+      "id": "keep",
+      "label": "keep"
+     },
+     {
+      "id": "dismiss",
+      "label": "not now"
+     }
+    ],
+    "why": "an idea from me"
+   },
+   "kind": "proposal",
+   "links": [
+    "project:chores"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "untangle/untangle-chores-to-dos",
+    "type": "proposal",
+    "url": null
+   },
+   "status": "proposed",
+   "summary": "4 to-dos that all say chores",
+   "tags": [
+    "untangle",
+    "pile"
+   ],
+   "title": "these 4 to-dos are all chores",
+   "updated": "2026-11-10T20:15:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "untangle-mail-to-dos",
+      "op": "keep",
+      "writer": "untangle"
+     },
+     "id": "keep",
+     "label": "move them",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "body": {
+      "id": "untangle-mail-to-dos",
+      "op": "dismiss",
+      "writer": "untangle"
+     },
+     "id": "dismiss",
+     "label": "not now",
+     "post": "/api/brain/proposal"
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "created": "2026-11-10T20:15:39-05:00",
+    "draft": null,
+    "edits": [
+     {
+      "id": "task:b210a7c37e",
+      "op": "move",
+      "to_pile": "pile:mail-to-dos"
+     },
+     {
+      "id": "task:cda9e9fbab",
+      "op": "move",
+      "to_pile": "pile:mail-to-dos"
+     },
+     {
+      "id": "task:2d585b78b3",
+      "op": "move",
+      "to_pile": "pile:mail-to-dos"
+     }
+    ],
+    "evidence": [],
+    "kind": "pile",
+    "why": "3 to-dos that all say mail",
+    "writer": "untangle"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "proposal:untangle-mail-to-dos",
+   "inbox": {
+    "group": "idea",
+    "since": "2026-11-10T20:15:39-05:00",
+    "verbs": [
+     {
+      "id": "keep",
+      "label": "keep"
+     },
+     {
+      "id": "dismiss",
+      "label": "not now"
+     }
+    ],
+    "why": "an idea from me"
+   },
+   "kind": "proposal",
+   "links": [
+    "project:mail"
+   ],
+   "priority": null,
+   "project": "project:mail",
+   "source": {
+    "ref": "untangle/untangle-mail-to-dos",
+    "type": "proposal",
+    "url": null
+   },
+   "status": "proposed",
+   "summary": "3 to-dos that all say mail",
+   "tags": [
+    "untangle",
+    "pile"
+   ],
+   "title": "these 3 to-dos are all mail",
+   "updated": "2026-11-10T20:15:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "untangle-planning-things",
+      "op": "keep",
+      "writer": "untangle"
+     },
+     "id": "keep",
+     "label": "move them",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "body": {
+      "id": "untangle-planning-things",
+      "op": "dismiss",
+      "writer": "untangle"
+     },
+     "id": "dismiss",
+     "label": "not now",
+     "post": "/api/brain/proposal"
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "created": "2026-11-10T20:15:39-05:00",
+    "draft": null,
+    "edits": [
+     {
+      "id": "session:20261110_112004_c0ffee",
+      "op": "move",
+      "to_pile": "pile:planning-things"
+     },
+     {
+      "id": "task:64c0e601cb",
+      "op": "move",
+      "to_pile": "pile:planning-things"
+     },
+     {
+      "id": "task:4f1f467328",
+      "op": "move",
+      "to_pile": "pile:planning-things"
+     }
+    ],
+    "evidence": [],
+    "kind": "pile",
+    "why": "3 things that all say planning",
+    "writer": "untangle"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "proposal:untangle-planning-things",
+   "inbox": {
+    "group": "idea",
+    "since": "2026-11-10T20:15:39-05:00",
+    "verbs": [
+     {
+      "id": "keep",
+      "label": "keep"
+     },
+     {
+      "id": "dismiss",
+      "label": "not now"
+     }
+    ],
+    "why": "an idea from me"
+   },
+   "kind": "proposal",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "untangle/untangle-planning-things",
+    "type": "proposal",
+    "url": null
+   },
+   "status": "proposed",
+   "summary": "3 things that all say planning",
+   "tags": [
+    "untangle",
+    "pile"
+   ],
+   "title": "these 3 things are all planning",
+   "updated": "2026-11-10T20:15:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "last_assistant": "Started. Invoice rendering and tax rules are now separate modules. 41 of 44 tests pass; fixing the last three, then I'll hand the PDF export to a subagent.",
+    "last_user": "Split billing/invoices.py into three modules and keep the tests green.",
+    "message_count": 38,
+    "model": "claude-opus-5-5",
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Refactor the billing module” (or `hermes --resume 20261110_061502_a1b2c3`)",
+    "parent_session_id": null,
+    "session_id": "20261110_061502_a1b2c3",
+    "source": "cli",
+    "started": "2026-11-10T18:40:39-05:00"
+   },
+   "due": null,
+   "id": "session:20261110_061502_a1b2c3",
+   "kind": "session",
+   "links": [
+    "project:work",
+    "session:20261110_062211_d4e5f6"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261110_061502_a1b2c3",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "active",
+   "summary": "live · 38 messages · last: Split billing/invoices.py into three modules and keep the tests green.",
+   "tags": [],
+   "title": "Refactor the billing module",
+   "updated": "2026-11-10T20:14:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:14:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "last_assistant": "Moved 12 of 18 test files, rewriting imports as I go.",
+    "last_user": "Move the invoice tests next to the new modules.",
+    "message_count": 14,
+    "model": "claude-opus-5-5",
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Subagent: split the invoice tests” (or `hermes --resume 20261110_062211_d4e5f6`)",
+    "parent_session_id": "20261110_061502_a1b2c3",
+    "session_id": "20261110_062211_d4e5f6",
+    "source": "cli",
+    "started": "2026-11-10T19:15:39-05:00"
+   },
+   "due": null,
+   "id": "session:20261110_062211_d4e5f6",
+   "kind": "session",
+   "links": [
+    "session:20261110_061502_a1b2c3",
+    "project:work"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261110_062211_d4e5f6",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "active",
+   "summary": "live · 14 messages · last: Move the invoice tests next to the new modules.",
+   "tags": [],
+   "title": "Subagent: split the invoice tests",
+   "updated": "2026-11-10T20:13:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:13:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.5,
+   "detail": {
+    "last_assistant": "I've asked Priya whether Thursday or Friday works and offered 11:00 either day. Waiting on her reply; I'll put it on your week as soon as she picks.",
+    "last_user": "Find a slot for the offsite planning call with Priya this week.",
+    "message_count": 9,
+    "model": "claude-opus-5-5",
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Coordinating: the offsite planning call…” (or `hermes --resume 20261110_112004_c0ffee`)",
+    "parent_session_id": null,
+    "session_id": "20261110_112004_c0ffee",
+    "source": "cli",
+    "started": "2026-11-10T18:15:39-05:00"
+   },
+   "due": null,
+   "id": "session:20261110_112004_c0ffee",
+   "kind": "session",
+   "links": [
+    "project:work",
+    "task:64c0e601cb"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261110_112004_c0ffee",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "active",
+   "summary": "live · 9 messages · last: Find a slot for the offsite planning call with Priya this week.",
+   "tags": [],
+   "title": "Coordinating: the offsite planning call with Priya",
+   "updated": "2026-11-10T20:12:39-05:00",
+   "when": {
+    "at": "2026-11-10T20:12:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "stall-staging",
+      "op": "keep",
+      "writer": "watcher"
+     },
+     "id": "keep",
+     "label": "keep",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "body": {
+      "id": "stall-staging",
+      "op": "dismiss",
+      "writer": "watcher"
+     },
+     "id": "dismiss",
+     "label": "dismiss",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.492,
+   "detail": {
+    "created": "2026-11-10T17:15:39-05:00",
+    "draft": null,
+    "evidence": [],
+    "kind": "task",
+    "why": "The deploy agent stopped at an approval prompt and nobody answered.",
+    "writer": "watcher"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "proposal:stall-staging",
+   "inbox": {
+    "group": "idea",
+    "since": "2026-11-10T17:15:39-05:00",
+    "verbs": [
+     {
+      "id": "keep",
+      "label": "keep"
+     },
+     {
+      "id": "dismiss",
+      "label": "not now"
+     }
+    ],
+    "why": "an idea from me"
+   },
+   "kind": "proposal",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "watcher/stall-staging",
+    "type": "proposal",
+    "url": null
+   },
+   "status": "proposed",
+   "summary": "It has waited three hours for an OK on the database migration.",
+   "tags": [
+    "watcher",
+    "task"
+   ],
+   "title": "The staging deploy went quiet. Nudge it?",
+   "updated": "2026-11-10T17:15:39-05:00",
+   "when": {
+    "at": "2026-11-10T17:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "idea-digest",
+      "op": "keep",
+      "writer": "watcher"
+     },
+     "id": "keep",
+     "label": "keep",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "body": {
+      "id": "idea-digest",
+      "op": "dismiss",
+      "writer": "watcher"
+     },
+     "id": "dismiss",
+     "label": "dismiss",
+     "post": "/api/brain/proposal"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.443,
+   "detail": {
+    "created": "2026-11-09T19:15:39-05:00",
+    "draft": null,
+    "evidence": [],
+    "kind": "task",
+    "why": "",
+    "writer": "watcher"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "proposal:idea-digest",
+   "inbox": {
+    "group": "idea",
+    "since": "2026-11-09T19:15:39-05:00",
+    "verbs": [
+     {
+      "id": "keep",
+      "label": "keep"
+     },
+     {
+      "id": "dismiss",
+      "label": "not now"
+     }
+    ],
+    "why": "an idea from me"
+   },
+   "kind": "proposal",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "watcher/idea-digest",
+    "type": "proposal",
+    "url": null
+   },
+   "status": "proposed",
+   "summary": "Five lines on what shipped, written from merged PRs. A first draft is ready to read.",
+   "tags": [
+    "watcher",
+    "task"
+   ],
+   "title": "Try the Friday digest for the team",
+   "updated": "2026-11-09T19:15:39-05:00",
+   "when": {
+    "at": "2026-11-09T19:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [],
+   "attention": 0.35,
+   "detail": {
+    "count": 3,
+    "items": [
+     {
+      "start": "2026-11-10T21:00:00-05:00",
+      "title": "Team standup"
+     },
+     {
+      "start": "2026-11-10T21:15:00-05:00",
+      "title": "School pickup"
+     },
+     {
+      "start": "2026-11-10T22:15:00-05:00",
+      "title": "Design review with Maya"
+     }
+    ],
+    "next": {
+     "due": "2026-11-10T21:00:00-05:00",
+     "text": "Team standup"
+    },
+    "note": "3 events today",
+    "overdue": 0,
+    "widget": "calendar",
+    "wired": true
+   },
+   "due": null,
+   "id": "widget:calendar",
+   "kind": "widget",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "calendar",
+    "type": "1guy",
+    "url": null
+   },
+   "status": "active",
+   "summary": "3 today · next Team standup 21:00",
+   "tags": [
+    "housekeeping"
+   ],
+   "title": "calendar",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "number": 211,
+      "verdict": "approve"
+     },
+     "id": "approve",
+     "label": "approve",
+     "post": "/api/review/verdict"
+    },
+    {
+     "body": {
+      "number": 211,
+      "verdict": "steer"
+     },
+     "id": "steer",
+     "label": "steer",
+     "note": true,
+     "post": "/api/review/verdict"
+    },
+    {
+     "body": {
+      "number": 211,
+      "verdict": "reject"
+     },
+     "id": "reject",
+     "label": "reject",
+     "note": true,
+     "post": "/api/review/verdict"
+    },
+    {
+     "href": "https://example.invalid/pr/211",
+     "id": "github",
+     "label": "open on github"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.334,
+   "detail": {
+    "author": "depbot",
+    "body": "Dependency update. All checks green.",
+    "comments": 0,
+    "labels": [
+     "dependencies"
+    ],
+    "number": 211,
+    "url": "https://example.invalid/pr/211",
+    "verdict": null
+   },
+   "due": null,
+   "id": "crew:211",
+   "kind": "crew",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "211",
+    "type": "github-issue",
+    "url": "https://example.invalid/pr/211"
+   },
+   "status": "waiting",
+   "summary": "Dependency update. All checks green.",
+   "tags": [
+    "dependencies"
+   ],
+   "title": "Bump the markdown parser to 5.2",
+   "updated": "2026-11-09T14:15:39-05:00",
+   "when": {
+    "at": "2026-11-09T14:15:39-05:00",
+    "kind": "activity"
+   },
+   "world": {
+    "kind": "waiting",
+    "line": "with depbot",
+    "since": 1794251739,
+    "src": "crew",
+    "who": "depbot"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.298,
+   "detail": {
+    "last_assistant": "Done. I compared pgvector, Qdrant and LanceDB on cost, ops burden and recall. Short version: start with pgvector, since you already run Postgres. The one-page comparison is attached.",
+    "last_user": "Compare three vector databases for a 50k-note app. Keep it to one page.",
+    "message_count": 26,
+    "model": "claude-opus-5-5",
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Research: which vector database for the…” (or `hermes --resume 20261109_173040_778899`)",
+    "parent_session_id": null,
+    "session_id": "20261109_173040_778899",
+    "source": "cli",
+    "started": "2026-11-10T01:55:39-05:00"
+   },
+   "due": null,
+   "id": "session:20261109_173040_778899",
+   "kind": "session",
+   "links": [
+    "project:work"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261109_173040_778899",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "idle · 26 messages · last: Compare three vector databases for a 50k-note app. Keep it to one page.",
+   "tags": [],
+   "title": "Research: which vector database for the notes app",
+   "updated": "2026-11-10T19:34:39-05:00",
+   "when": {
+    "at": "2026-11-10T19:34:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.291,
+   "detail": {
+    "last_assistant": "Build is up on staging. I'm about to run the database migration, which needs your OK before I touch the data.",
+    "last_user": "Deploy the staging build and run the smoke tests.",
+    "message_count": 22,
+    "model": "claude-opus-5-5",
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Deploy the staging build” (or `hermes --resume 20261110_023315_aabbcc`)",
+    "parent_session_id": null,
+    "session_id": "20261110_023315_aabbcc",
+    "source": "cli",
+    "started": "2026-11-10T13:25:39-05:00"
+   },
+   "due": null,
+   "id": "session:20261110_023315_aabbcc",
+   "kind": "session",
+   "links": [
+    "project:work"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261110_023315_aabbcc",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "idle · 22 messages · last: Deploy the staging build and run the smoke tests.",
+   "tags": [],
+   "title": "Deploy the staging build",
+   "updated": "2026-11-10T17:05:39-05:00",
+   "when": {
+    "at": "2026-11-10T17:05:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.243,
+   "detail": {
+    "last_assistant": "Worth trying. A first version could read merged PRs and closed tickets and write five lines. Want me to sketch the format?",
+    "last_user": "What if the team got a Friday digest of what shipped, written by the agent?",
+    "message_count": 8,
+    "model": "claude-opus-5-5",
+    "needs": {
+     "kind": "question",
+     "soft": true,
+     "why": "ended on a question to you yesterday, no reply since"
+    },
+    "open_in_desktop_hint": "Hermes Desktop → Sessions → search “Idea: a weekly digest for the team” (or `hermes --resume 20261108_201010_ddeeff`)",
+    "parent_session_id": null,
+    "session_id": "20261108_201010_ddeeff",
+    "source": "cli",
+    "started": "2026-11-09T05:55:39-05:00"
+   },
+   "due": null,
+   "for_you": true,
+   "id": "session:20261108_201010_ddeeff",
+   "kind": "session",
+   "links": [
+    "project:work"
+   ],
+   "priority": null,
+   "project": "project:work",
+   "source": {
+    "ref": "20261108_201010_ddeeff",
+    "type": "hermes-session",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "idle · 8 messages · last: What if the team got a Friday digest of what shipped, written by the agent?",
+   "tags": [],
+   "title": "Idea: a weekly digest for the team",
+   "updated": "2026-11-09T19:15:39-05:00",
+   "when": {
+    "at": "2026-11-09T19:15:39-05:00",
+    "kind": "activity"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "d9a9d9e70c",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "d9a9d9e70c",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "d9a9d9e70c",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.2,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "d9a9d9e70c",
+    "text": "Farmers market with the kids"
+   },
+   "due": "2026-11-14T09:00",
+   "id": "task:d9a9d9e70c",
+   "kind": "task",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "d9a9d9e70c",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Farmers market with the kids",
+   "tags": [],
+   "title": "Farmers market with the kids",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-14T09:00",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "4f1f467328",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "4f1f467328",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "4f1f467328",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.2,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "4f1f467328",
+    "text": "Sprint planning"
+   },
+   "due": "2026-11-16T09:30",
+   "id": "task:4f1f467328",
+   "kind": "task",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "4f1f467328",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Sprint planning",
+   "tags": [],
+   "title": "Sprint planning",
+   "updated": null,
+   "when": {
+    "all_day": false,
+    "at": "2026-11-16T09:30",
+    "kind": "due"
+   }
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "cda9e9fbab",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "cda9e9fbab",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "cda9e9fbab",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "cda9e9fbab",
+    "text": "Answer Dana: her quote for 200 notebooks needs a yes by Friday."
+   },
+   "due": null,
+   "id": "task:cda9e9fbab",
+   "kind": "task",
+   "links": [
+    "project:mail"
+   ],
+   "priority": null,
+   "project": "project:mail",
+   "source": {
+    "ref": "cda9e9fbab",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Answer Dana: her quote for 200 notebooks needs a yes by Friday.",
+   "tags": [
+    "mail"
+   ],
+   "title": "Answer Dana: her quote for 200 notebooks needs a yes by Friday.",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "2d585b78b3",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "2d585b78b3",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "2d585b78b3",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "2d585b78b3",
+    "text": "Answer Maya: does the retry PR need a changelog line?"
+   },
+   "due": null,
+   "id": "task:2d585b78b3",
+   "kind": "task",
+   "links": [
+    "project:mail"
+   ],
+   "priority": null,
+   "project": "project:mail",
+   "source": {
+    "ref": "2d585b78b3",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Answer Maya: does the retry PR need a changelog line?",
+   "tags": [
+    "mail"
+   ],
+   "title": "Answer Maya: does the retry PR need a changelog line?",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "cdcb26a5f7",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "cdcb26a5f7",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "cdcb26a5f7",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "cdcb26a5f7",
+    "text": "Order printer ink"
+   },
+   "due": null,
+   "id": "task:cdcb26a5f7",
+   "kind": "task",
+   "links": [
+    "project:chores"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "cdcb26a5f7",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Order printer ink",
+   "tags": [
+    "chores"
+   ],
+   "title": "Order printer ink",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "b41f4db246",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b41f4db246",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "b41f4db246",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "b41f4db246",
+    "text": "Water the plants before the trip"
+   },
+   "due": null,
+   "id": "task:b41f4db246",
+   "kind": "task",
+   "links": [
+    "project:chores"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "b41f4db246",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Water the plants before the trip",
+   "tags": [
+    "chores"
+   ],
+   "title": "Water the plants before the trip",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "41fc5e53a0",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "41fc5e53a0",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "41fc5e53a0",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "41fc5e53a0",
+    "text": "Renew the passport photo"
+   },
+   "due": null,
+   "id": "task:41fc5e53a0",
+   "kind": "task",
+   "links": [
+    "project:chores"
+   ],
+   "priority": null,
+   "project": "project:chores",
+   "source": {
+    "ref": "41fc5e53a0",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Renew the passport photo",
+   "tags": [
+    "chores"
+   ],
+   "title": "Renew the passport photo",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "id": "da891954c8",
+      "op": "toggle"
+     },
+     "id": "done",
+     "label": "done",
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "da891954c8",
+      "op": "edit"
+     },
+     "id": "edit",
+     "label": "edit",
+     "note": true,
+     "post": "/api/board/task"
+    },
+    {
+     "body": {
+      "id": "da891954c8",
+      "op": "delete"
+     },
+     "confirm": "delete this task?",
+     "id": "delete",
+     "label": "delete",
+     "post": "/api/board/task"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.15,
+   "detail": {
+    "anchor": null,
+    "handoff_hint": "starts fresh from the item text",
+    "origin": null,
+    "section": "To-do",
+    "tasklist_id": "da891954c8",
+    "text": "Sketch the Friday digest format"
+   },
+   "due": null,
+   "id": "task:da891954c8",
+   "kind": "task",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "da891954c8",
+    "type": "tasklist",
+    "url": null
+   },
+   "status": "idle",
+   "summary": "Sketch the Friday digest format",
+   "tags": [
+    "ideas"
+   ],
+   "title": "Sketch the Friday digest format",
+   "updated": null
+  },
+  {
+   "actions": [
+    {
+     "body": {
+      "job_id": "morning-brief",
+      "op": "run"
+     },
+     "confirm": "run “Morning brief” now? it does real work (may send mail or post)",
+     "id": "run",
+     "label": "run now",
+     "post": "/api/board/job"
+    },
+    {
+     "id": "surface",
+     "label": "open work surface",
+     "surface": true
+    }
+   ],
+   "attention": 0.116,
+   "detail": {
+    "deliver": "local",
+    "failure_streak": 0,
+    "job_id": "morning-brief",
+    "last_output_excerpt": "Good morning. Two meetings today (standup, design review), three emails need an answer, and the staging deploy is waiting on your OK for the migration.",
+    "last_run": "2026-11-10T07:00:00-05:00",
+    "last_status": "ok",
+    "next_run": "2026-11-11T07:00:00-05:00",
+    "schedule": "every day at 7:00"
+   },
+   "due": null,
+   "id": "job:morning-brief",
+   "kind": "job",
+   "links": [],
+   "priority": null,
+   "project": null,
+   "source": {
+    "ref": "morning-brief",
+    "type": "cron",
+    "url": null
+   },
+   "status": "done",
+   "summary": "ran 07:00 · ok · Good morning. Two meetings today (standup, design review), three emails need an answer, and the staging deploy is waiting on your OK for the migration.",
+   "tags": [],
+   "title": "Morning brief",
+   "updated": "2026-11-10T07:00:00-05:00",
+   "when": {
+    "at": "2026-11-11T07:00:00-05:00",
+    "kind": "scheduled"
+   },
+   "world": {
+    "kind": "scheduled",
+    "line": "next run tomorrow 7am",
+    "src": "job",
+    "who": "the routine"
+   }
+  }
+ ],
+ "briefing": {
+  "broke": [],
+  "by": "door",
+  "door": {
+   "chats": 5,
+   "jobs": 2,
+   "need": [
+    "session:20261108_201010_ddeeff",
+    "job:nightly-backup"
+   ]
+  },
+  "for_you": [
+   "session:20261108_201010_ddeeff",
+   "job:nightly-backup",
+   "proposal:untangle-chores-to-dos",
+   "proposal:untangle-mail-to-dos",
+   "proposal:untangle-planning-things",
+   "task:a5ec680c01",
+   "task:b210a7c37e",
+   "crew:214",
+   "task:2c7bb243b4",
+   "task:b9228fb563",
+   "task:9f440cf259",
+   "task:6d25928677",
+   "proposal:stall-staging",
+   "proposal:idea-digest"
+  ],
+  "heads_up": "heads up: pickup overlaps the standup.",
+  "heads_up_id": "task:b9228fb563",
+  "line": "i went through your hermes. 5 chats in two weeks, 2 scheduled jobs. two need you.",
+  "whys": {
+   "crew:214": "waiting on you 3h",
+   "job:nightly-backup": "its last run failed, 17h ago",
+   "proposal:idea-digest": "in motion 1d",
+   "proposal:stall-staging": "in motion 3h",
+   "proposal:untangle-chores-to-dos": "goes together",
+   "proposal:untangle-mail-to-dos": "goes together",
+   "proposal:untangle-planning-things": "goes together",
+   "session:20261108_201010_ddeeff": "ended on a question to you yesterday, no reply since",
+   "task:2c7bb243b4": "due today",
+   "task:6d25928677": "due today",
+   "task:9f440cf259": "due today",
+   "task:a5ec680c01": "waiting on you",
+   "task:b210a7c37e": "waiting on you",
+   "task:b9228fb563": "due today"
+  }
+ },
+ "generated_at": "2026-11-10T20:15:41-05:00",
+ "projects": [
+  {
+   "color": "#f5d76e",
+   "id": "project:work",
+   "summary": "2 open tasks tagged #work",
+   "title": "work"
+  },
+  {
+   "color": "#e58fd0",
+   "id": "project:mail",
+   "summary": "3 open tasks tagged #mail",
+   "title": "mail"
+  },
+  {
+   "color": "#9fd36b",
+   "id": "project:chores",
+   "summary": "4 open tasks tagged #chores",
+   "title": "chores"
+  }
+ ],
+ "sources": {
+  "brain": {
+   "count": 0,
+   "ok": true
+  },
+  "crew": {
+   "count": 2,
+   "ok": true
+  },
+  "jobs": {
+   "count": 2,
+   "ok": true
+  },
+  "media": {
+   "count": 0,
+   "ok": true
+  },
+  "proposals": {
+   "count": 5,
+   "ok": true
+  },
+  "sessions": {
+   "count": 6,
+   "ok": true
+  },
+  "tasks": {
+   "count": 18,
+   "ok": true
+  },
+  "widgets": {
+   "count": 3,
+   "ok": true
+  }
+ }
+}

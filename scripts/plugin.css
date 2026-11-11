@@ -1,0 +1,22 @@
+/* 1guy plugin additions (scripts/plugin.css, appended after the canvas's own styles).
+   An empty lens says why it is empty, in his voice, instead of showing a blank page. */
+body[data-og-lens="inbox"]:has(#og-cards:empty) #og-stage::after,
+body[data-og-lens="time"]:has(#og-cards:empty) #og-stage::after,
+body[data-og-lens="board"]:has(#og-cards:empty) #og-stage::after {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 0 24px 120px;
+  white-space: pre-line; text-align: center; pointer-events: none;
+  color: #a9aab0; font: 500 17px/1.6 Inter, system-ui, sans-serif;
+}
+body[data-og-lens="inbox"]:has(#og-cards:empty) #og-stage::after {
+  content: "nothing is waiting on you.\A when something needs a yes or a no from you, it lands here.";
+}
+body[data-og-lens="time"]:has(#og-cards:empty) #og-stage::after {
+  content: "nothing on your week yet.\A scheduled jobs and anything with a due date show up here.";
+}
+body[data-og-lens="board"]:has(#og-cards:empty) #og-stage::after {
+  content: "nothing here yet.\A your chats, scheduled jobs and to-dos land here as cards.";
+}
+
+/* "N working" in the header links to the old server's runs page, which the plugin does not
+   have. Here it is a plain count, not a link that goes nowhere. */
+#og-sum a.og-working { pointer-events: none; cursor: default; text-decoration: none; }

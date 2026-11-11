@@ -1,0 +1,11 @@
+name: 1guy
+version: "1.0.20"
+description: "Hermes does the work. 1guy brings it back to you. One desk over your whole Hermes: every session, scheduled job and to-do is a card, every card opens its own Hermes session, and one companion on top tells you the few things that need you."
+author: jrezmo
+requires_hermes: ">=0.23.0"
+provides_tools: []
+provides_hooks: []
+python_dependencies:
+  - "fastapi>=0.100,<1.0"
+  - "pydantic>=2.0,<3.0"
+homepage: https://github.com/jrezmo/1guy-plugin

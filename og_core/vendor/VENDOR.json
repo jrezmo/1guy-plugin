@@ -1,0 +1,27 @@
+{
+  "source": "1guy",
+  "ref": "main",
+  "sha": "8e711058f8dea6fac186785b644e91f6a6af0555",
+  "files": 89,
+  "scrubbed_files": 27,
+  "routes": [
+    "board",
+    "briefing",
+    "feed",
+    "home_state",
+    "judgments",
+    "mailcal",
+    "stage",
+    "surface",
+    "talk",
+    "threads"
+  ],
+  "patches": [
+    "home/core.js",
+    "home/core.js",
+    "home/core.js",
+    "home/doors.js",
+    "home/doors.js",
+    "home/talk.js"
+  ]
+}

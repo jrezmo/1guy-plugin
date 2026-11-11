@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+<title>1guy</title>
+<style>html, body { margin: 0; height: 100%; background: #101114; }</style>
+</head>
+<body>
+<script>
+// The loader. This tiny document is what the frame navigates to; the canvas itself (a few
+// hundred KB) arrives from the host page as a message and is written into this same document,
+// so the frame's URL stays small and the content policy above still applies to what is written.
+(() => {
+  const once = (e) => {
+    const d = e.data;
+    if (e.source !== window.parent || !d || d.type !== 'oneguy:page' || typeof d.html !== 'string') return;
+    window.removeEventListener('message', once);
+    window.ONEGUY_LOCAL = d.local && typeof d.local === 'object' ? d.local : {};   // remembered choices
+    window.ONEGUY_SAMPLE = d.sample === true;     // the sample desk (a read-only synthetic world)
+    document.open();
+    document.write(d.html);
+    document.close();
+  };
+  window.addEventListener('message', once);
+  window.parent.postMessage({ type: 'oneguy:boot' }, '*');
+})();
+</script>
+</body>
+</html>

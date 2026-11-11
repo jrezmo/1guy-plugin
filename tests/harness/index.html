@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>1guy plugin harness</title>
+<script type="importmap">
+{ "imports": { "@hermes/plugin-sdk": "./sdk.js", "react": "./react.js", "react/jsx-runtime": "./jsx-runtime.js" } }
+</script>
+<style>
+  body { margin: 0; background: #18181b; color: #d4d4d8; font: 13px system-ui, sans-serif; }
+  #page { position: fixed; inset: 0; }
+  .h-full { height: 100% } .w-full { width: 100% } .border-0 { border: 0 }
+  :root { --ui-text-secondary:#d4d4d8; --ui-text-tertiary:#a1a1aa; --ui-text-quaternary:#71717a; --ui-stroke-secondary:#3f3f46; --ui-accent:#ffb547; }
+  .flex { display: flex } .flex-col { flex-direction: column } .gap-2 { gap: 8px } .gap-1 { gap: 4px } .px-3 { padding: 0 12px } .pt-2 { padding-top: 8px }
+  .p-3 { padding: 12px } .flex-1 { flex: 1 } .min-h-0 { min-height: 0 } .overflow-hidden { overflow: hidden } .relative { position: relative }
+  .inline-flex { display: inline-flex } .px-5 { padding: 0 20px } .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+  .rounded-lg { border-radius: 8px } .rounded { border-radius: 4px } .border { border: 1px solid var(--ui-stroke-secondary) } .border-t { border-top: 1px solid var(--ui-stroke-secondary) }
+  .rounded-full { border-radius: 999px } .h-2 { height: 8px } .w-2 { width: 8px } .text-xs { font-size: 12px } .text-left { text-align: left }
+  button { background: none; color: inherit; cursor: pointer; font: inherit } .items-center { align-items: center } .justify-center { justify-content: center }
+</style>
+</head>
+<body>
+<div id="page"></div>
+<script type="module">
+  // ?reset puts the synthetic world back as built (see serve.py reset_world), then loads clean
+  if (new URLSearchParams(location.search).has('reset')) {
+    await fetch('/harness/reset').catch(() => 0)
+    await fetch('/api/plugins/1guy/board?fresh=1').catch(() => 0)
+    const u = new URL(location.href); u.searchParams.delete('reset'); location.replace(u.href)
+    await new Promise(() => {})
+  }
+  import plugin from '/desktop/plugin.js'
+  import { ctx } from './sdk.js'
+  import { mount } from './react.js'
+  plugin.register(ctx)
+  window.__contribs = ctx.contribs.map(c => ({ id: c.id, area: c.area, title: c.title, data: JSON.parse(JSON.stringify(c.data || {})) }))
+  window.__run = id => ctx.contribs.find(c => c.data && c.data.id === id).data.run()
+  // ?view=<contribution id> mounts a pane instead of the page (dock, tasks-pane, pane)
+  const view = new URLSearchParams(location.search).get('view')
+  const pick = view ? ctx.contribs.find(c => c.id === view) : ctx.contribs.find(c => c.area === 'routes')
+  mount(document.getElementById('page'), pick.render)
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="haze" gradientUnits="userSpaceOnUse" cx="256" cy="256" r="230">
+      <stop offset="0" stop-color="#ffb547" stop-opacity=".55"/>
+      <stop offset=".45" stop-color="#ffb547" stop-opacity=".25"/>
+      <stop offset=".8" stop-color="#ffb547" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#ffb547" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb" gradientUnits="userSpaceOnUse" cx="256" cy="256" r="143" fx="214" fy="201">
+      <stop offset="0" stop-color="#ffe2a8"/>
+      <stop offset=".42" stop-color="#ffb547"/>
+      <stop offset="1" stop-color="#e88e22"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="#101114"/>
+  <circle cx="256" cy="256" r="230" fill="url(#haze)"/>
+  <circle cx="256" cy="256" r="105" fill="url(#orb)"/>
+</svg>

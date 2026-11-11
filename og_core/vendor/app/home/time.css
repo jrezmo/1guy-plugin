@@ -1,0 +1,71 @@
+/* 1guy home · lane D: time is a place + the world's motion on a face. Loaded by time.js. */
+
+/* ---- lane D · the world's motion on a face (board/world.py → live.js) ----
+   ONE plain line of what's moving and who's moving it, in the face's foot, left of the verb corner.
+   Teal = live work (his session, a helper); amber = waiting on the user or a conflict he should see;
+   grey = settled or scheduled; red-ish = broke. A bare "moving"/"idle" chip never shows on a face. */
+.og-world[data-kind="waiting-on-you"], .og-world[data-kind="conflict"] { color: var(--amber, #ffb547); }
+.og-world[data-kind="waiting-on-you"] .og-live-dot, .og-world[data-kind="conflict"] .og-live-dot { background: var(--amber, #ffb547); animation: none; }
+.og-world:is([data-kind="confirmed"], [data-kind="scheduled"], [data-kind="waiting"]) { color: #9a9ca3; }
+.og-world:is([data-kind="confirmed"], [data-kind="scheduled"], [data-kind="waiting"]) .og-live-dot { background: #6f727a; animation: none; }
+.og-world[data-kind="confirmed"] .og-live-dot { background: #7fb38f; }
+.og-world[data-kind="failed"] { color: #d79a9a; }
+.og-world[data-kind="failed"] .og-live-dot { background: #d77a7a; animation: none; }
+.og-card:not(.og-live) .og-world .og-live-dot { animation: none; }
+.og-card.fx-face > .og-live-line { right: 96px; bottom: 15px; background: none; padding: 0; }
+.og-card > .og-world.og-world-flow { flex-wrap: nowrap; align-items: flex-start; position: relative; left: auto; right: auto; bottom: auto; margin-top: 7px; padding: 0; background: none; }
+.og-world-flow .og-live-t { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.og-world-flow .og-live-dot { align-self: flex-start; margin-top: 4px; }
+body[data-og-lens="time"] .og-world[data-kind="scheduled"] { display: none; }   /* the day column already says when it runs */
+.fx-face > .og-live-line .og-live-open { display: none; }      /* one button per face: the session opens from focus */
+.og-fy.fx-face > .og-live-line { padding-right: 84px; }
+.kf-st.st-active, .kf-st.st-idle { display: none; }           /* "moving" / "idle" say nothing */
+
+/* ---- lane D · drop on time = schedule (time.js) ---- */
+.og-slot-hint { position: fixed; left: 0; top: 0; z-index: 80; pointer-events: none; padding: 6px 10px; border-radius: 9px;
+  background: #f1efe9; color: #17181c; font: 600 13px/1.2 Inter, system-ui, sans-serif; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); white-space: nowrap; }
+.og-region.og-drop-day { border-color: rgba(241, 239, 233, .55) !important; background: rgba(241, 239, 233, .045) !important; }
+.og-region[data-cluster="day:none"] { border-style: dashed; }
+.og-card.og-landed { animation: og-land 900ms cubic-bezier(.2, .8, .2, 1); }
+@keyframes og-land { 0% { box-shadow: 0 0 0 0 rgba(241, 239, 233, .5); } 40% { box-shadow: 0 0 0 6px rgba(241, 239, 233, .14); } 100% { box-shadow: 0 0 0 0 rgba(241, 239, 233, 0); } }
+@media (prefers-reduced-motion: reduce) { .og-card.og-landed { animation: none; } }
+
+/* ---- the week's doors (time.js): slim tabs on the edges, Time lens only ---- */
+.og-door { position: fixed; top: 50%; z-index: 30; transform: translateY(-50%); width: 30px; height: 176px; padding: 0;
+  display: grid; place-items: center; cursor: pointer; border-radius: 12px; border: 1px dashed rgba(241, 239, 233, .22);
+  background: rgba(21, 23, 27, .86); color: #b9bbc2; font: 600 12px/1 Inter, system-ui, sans-serif; letter-spacing: .02em; }
+.og-door-t { writing-mode: vertical-rl; white-space: pre; }
+.og-door-l .og-door-t { transform: rotate(180deg); }
+.og-door-r { right: calc(var(--og-rail-w, 0px) + 6px); left: auto; }
+.og-door-l { right: auto; }
+.og-door-l { left: 6px; }
+.og-door:hover, .og-door.og-drop-day { color: #fff; border-color: rgba(241, 239, 233, .6) !important; background: rgba(40, 42, 48, .96) !important; }
+.og-door[hidden], body:not([data-og-lens="time"]) .og-door { display: none; }
+/* stacked week: the doors are rows at its ends */
+.og-region[data-cluster="day:next"]:not(.og-door), .og-region[data-cluster="day:prev"]:not(.og-door) { cursor: pointer; border-style: dashed; }
+.og-region[data-cluster="day:next"]:not(.og-door) .og-region-t, .og-region[data-cluster="day:prev"]:not(.og-door) .og-region-t { color: #d6d7dc; }
+
+/* ---- he names a collision before it's written (time.js ask) ---- */
+.og-ask { position: fixed; z-index: 72; left: calc((100vw - var(--og-rail-w, 0px)) / 2); transform: translateX(-50%);
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center;
+  max-width: min(560px, calc(100vw - 32px)); padding: 8px 8px 8px 14px; border-radius: 14px; background: rgba(27, 29, 34, .97);
+  border: 1px solid rgba(255, 181, 71, .45); box-shadow: 0 10px 30px rgba(0, 0, 0, .4); color: #f1efe9; font: 500 13.5px/1.35 Inter, system-ui, sans-serif; }
+.og-ask-t { flex: 1 1 200px; }
+.og-ask button { padding: 6px 12px; border-radius: 9px; cursor: pointer; font: 600 13px/1 Inter, system-ui, sans-serif; border: 1px solid #3a3d45; background: #23252b; color: #e4e5e9; }
+.og-ask .og-ask-yes { background: var(--amber, #ffb547); border-color: var(--amber, #ffb547); color: #1b1407; }
+
+/* ---- held while he coordinates (world.py 'held'): the slot is a placeholder until they say yes ---- */
+.og-card[data-world="held"] { border-style: dashed !important; border-color: rgba(90, 209, 195, .45) !important; background: rgba(26, 28, 33, .7) !important; }
+.og-world[data-kind="held"] { color: rgb(90, 209, 195); }
+.og-world[data-kind="held"] .og-live-dot { background: transparent; border: 1px dashed rgb(90, 209, 195); animation: none; }
+
+/* a wrapping world line keeps its dot beside the first word (never alone on a line) */
+.og-live-line.og-world { flex-wrap: nowrap; align-items: flex-start; }
+.og-live-line.og-world .og-live-dot { flex: none; margin-top: 4px; }
+.og-live-line.og-world .og-live-t { flex: 1 1 auto; min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.og-fy .og-live-line.og-world .og-live-t { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* plugin round 18 (LOW, D): on a phone or a narrow pane the verb is a 44 px tap target (bottom: 10px), but the face's
+   foot was sized for the 32 px desk button (40 px compact / 46 px card), so a one-line title ran under 'done'.
+   On the Time lens the foot is as tall as the button needs. (The board lens has the same overlap: B's rule.) */
+body.og-mobile[data-og-lens="time"] .og-card.fx-face { padding-bottom: 58px !important; }

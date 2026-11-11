@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+STATUS.md
+.pytest_cache/
+scripts/scrub.local.tsv
+.release/

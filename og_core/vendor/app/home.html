@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- mountable: asset URLs are page-relative (serve.py adds <base href="/app/"> at "/"); the API base is
+     <meta name="oneguy-api" content="/api/plugins/oneguy"> when set, else inferred from where home/core.js is served. -->
+<meta name="theme-color" content="#101114">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="1guy">
+<title>1guy</title>
+<link rel="stylesheet" href="home/home.css">
+</head>
+<body>
+<div id="og-stage" aria-label="the work pane">
+  <div id="og-world">
+    <div id="og-regions"></div>
+    <div id="og-cards"></div>
+  </div>
+  <div id="og-projects" hidden></div>
+</div>
+<main id="og-brief" aria-label="today"></main>
+<svg id="og-tendrils" aria-hidden="true"></svg>
+<div id="og-backdrop" hidden></div>
+<header id="og-top">
+  <button id="og-mark" type="button" aria-haspopup="menu" aria-expanded="false">1guy</button>
+  <button id="og-tidy" type="button" hidden>tidy the table</button>
+  <div id="og-sum" aria-live="polite"></div>
+  <nav id="og-menu" role="menu" hidden>
+    <button role="menuitem" type="button" data-act="everything">show everything</button>
+    <a role="menuitem" href="news.html" data-act="news">the morning paper <span>↗</span></a>
+    <a role="menuitem" href="/reel" data-act="reel">the reel <span>↗</span></a>
+    <button role="menuitem" type="button" data-act="refresh">refresh</button>
+    <div class="og-menu-zoom" role="group" aria-label="zoom">
+      <button type="button" data-act="zoom-projects">piles</button>
+      <button type="button" data-act="zoom-blocks">cards</button>
+    </div>
+  </nav>
+  <nav id="og-lens" role="tablist" aria-label="ways to look at it">
+    <button role="tab" type="button" data-lens="today" aria-selected="true">today</button>
+    <button role="tab" type="button" data-lens="board">board</button>
+    <button role="tab" type="button" data-lens="time">time</button>
+    <button role="tab" type="button" data-lens="inbox">inbox<i id="og-lens-n" hidden></i></button>
+  </nav>
+  <button id="og-back" type="button">← back to today</button>
+</header>
+<aside id="og-rail" aria-label="put away"></aside>
+<div id="og-orb-layer" aria-hidden="true"></div>
+<div id="og-jline" aria-live="polite"></div>
+<div id="og-toast" role="status" aria-live="polite"></div>
+<noscript><p style="color:#a9aab0;font:15px system-ui;padding:40px">1guy needs JavaScript.</p></noscript>
+<script type="module" src="home/main.js"></script>
+</body>
+</html>
