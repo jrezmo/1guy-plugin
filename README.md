@@ -1,5 +1,18 @@
 # 1guy
 
+> **Retired (November 2026).** 1guy is no longer maintained and has been withdrawn from the
+> Hermes plugin catalog. If you installed it, remove it and the optional job it may have created:
+>
+> ```
+> hermes plugins remove 1guy
+> hermes cron list            # if a job named 1guy-mail-cal is there:
+> hermes cron remove <its id>
+> ```
+>
+> Then delete `<HERMES_HOME>/plugin-data/1guy/` and `<HERMES_HOME>/desktop-plugins/1guy/` if
+> they remain. Your sessions, tasklist and cron jobs are otherwise untouched. The code stays
+> here, read-only, for reference.
+
 1guy is an early prototype of a bigger idea: the next interface should hold your
 open work across sessions, not hand it off. The core loop works (opener, sorting
 into piles, handing off a card). The edges are rough, built fast for this hackathon.
