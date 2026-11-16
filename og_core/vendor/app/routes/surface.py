@@ -660,6 +660,15 @@ def create_session(title):
     raise RuntimeError("the plugin build has no API-server path; og_core.talk supplies this seam")
 
 
+def archive_session(session_id, archived=True):
+    """Archive (or bring back) a session: out of the user's session list, messages kept.
+    The Hermes session API's own flag (PATCH /api/sessions/{id}); the plugin answers this call
+    through the desktop relay (session.archive)."""
+    r = _hreq("PATCH", f"/api/sessions/{session_id}", {"archived": bool(archived)}, timeout=10)
+    if hasattr(r, "close"):
+        r.close()
+
+
 def stop_run(hermes_run_id):
     return {}
 
@@ -779,7 +788,7 @@ def _start_run(block_id, text, mode, heard_tail="", queue_id=None, prev=None):
 # One resolve-or-start at a time per item. Two doors can reach "no thread yet" for the same card
 # within a second (the talk route opening the thread while the surface sends its first line, or two
 # sends racing): each used to create a session, the thread map kept one, and the other was left as an
-# unrecorded session nobody could find again (one card once got two sessions a second apart).
+# unrecorded session nobody could find again (the user's board: one card, two sessions a second apart).
 _start_locks = {}
 _start_guard = threading.Lock()
 
@@ -804,17 +813,103 @@ def ensure_session(bid, block, opened_from="canvas"):
             key, aliases = stable_key(bid, block)
             rec = update_surface(bid, session_id=sid, key=key, aliases=aliases, title=title,
                                  kind=block.get("kind"), opened_from=opened_from)
+        elif rec.get("archived"):
+            # put away by tidy() (card finished, or quiet); opening the card brings it back
+            try:
+                archive_session(sid, False)
+            except Exception:
+                pass                                # the turn still lands; it just stays archived
+            rec = update_surface(bid, archived=False) or rec
         return rec, sid
+
+
+# ------------------------------------------------------------------ putting threads away
+# Every card the user opens is a real session in their Hermes session list (Desktop sidebar,
+# phone). Nothing used to put one away, so the list filled with finished cards. tidy() archives a
+# card's session when the card is finished (a done or deleted to-do, a proposal that was answered)
+# or its thread has been quiet for THREAD_IDLE_H. Archived = out of the list, messages kept;
+# opening the card again brings it back (ensure_session). Never the home thread, never mid-turn.
+THREAD_IDLE_S = float(os.environ.get("ONEGUY_THREAD_IDLE_H", "48") or 0) * 3600   # 0: finished cards only
+TIDY_EVERY_S = 1800
+TIDY_MAX = 10                       # per sweep: a bad board read can never sweep everything at once
+FINISHED_KINDS = {"task": "tasks", "proposal": "proposals"}   # kinds whose source lists every live one
+_tidy_state = {"at": 0.0}
+
+
+def _last_activity(rec):
+    s = rec.get("surface") or {}
+    meta = session_meta((rec.get("primary") or {}).get("session_id")) or {}
+    return max(float(s.get("last_activity") or 0), float((rec.get("primary") or {}).get("at") or 0),
+               float(meta.get("last_activity_at") or 0))
+
+
+def tidy(board, now=None, force=False, path=None):
+    """Archive the sessions of finished or long-quiet cards. -> [{key, session_id, why}].
+    `board` is a just-built board: a to-do or proposal counts as finished only when its source
+    answered this build and the card is gone or done."""
+    now = now or time.time()
+    if os.environ.get("ONEGUY_THREAD_TIDY", "on") == "off":
+        return []
+    if not force and now - _tidy_state["at"] < TIDY_EVERY_S:
+        return []
+    _tidy_state["at"] = now
+    path = path or THREADS_FILE
+    data = _threads.load(path)
+    srcs = (board or {}).get("sources") or {}
+    blocks = {b.get("id"): b for b in (board or {}).get("blocks") or [] if isinstance(b, dict)}
+    live = {}
+    for bid, b in blocks.items():
+        live[_threads.canonical(bid, data)] = b
+    busy = {_threads.canonical(b, data) for b, rid in LIVE.current.items()
+            if LIVE.runs.get(rid) and not LIVE.runs[rid].done}
+    out = []
+    for key, rec in sorted((data.get("threads") or {}).items()):
+        if len(out) >= TIDY_MAX:
+            break
+        sid = (rec.get("primary") or {}).get("session_id")
+        if key == "home" or not sid or (rec.get("surface") or {}).get("archived") or key in busy:
+            continue
+        kind = key.split(":", 1)[0]
+        why = None
+        src = FINISHED_KINDS.get(kind)
+        if src and (srcs.get(src) or {}).get("ok"):
+            b = live.get(key)
+            if b is None:
+                why = "finished"
+            elif b.get("status") == "done":
+                why = "done"
+        if why is None and THREAD_IDLE_S and now - _last_activity(rec) > THREAD_IDLE_S:
+            why = "quiet"
+        if why is None:
+            continue
+        try:
+            archive_session(sid)
+        except Exception:
+            continue                        # unreachable now; the next sweep tries again
+        update_surface(key, path=path, archived=True, archived_at=now, archived_why=why)
+        out.append({"key": key, "session_id": sid, "why": why})
+    return out
+
+
+def _shell(run, sid, first):
+    """A first turn that failed before Hermes wrote a single message leaves an empty session in the
+    user's list (one did, on a real board). True when this run made one."""
+    if not first or run.text or not (run.error or run.stopped):
+        return False
+    meta = session_meta(sid)
+    return bool(meta) and int(meta.get("message_count") or 0) == 0
 
 
 def _worker(run, heard_tail):
     bid = run.block_id
+    sid, first = None, False
     try:
         rec = get_surface(bid)
         ctx = LIVE.ctx.get(bid) or {}
         block = ctx.get("block") or {"id": bid}
         carried = None
         rec, sid = ensure_session(bid, block, ctx.get("opened_from") or "canvas")
+        first = not rec.get("turns")
         if not rec.get("turns"):
             carried = build_carried_context(block, ctx.get("linked"), ctx.get("board_top"))
             update_surface(bid, carried_tokens=est_tokens(carried),
@@ -889,7 +984,15 @@ def _worker(run, heard_tail):
             elif run.status in ("starting", "streaming"):
                 run.status = "completed"
             LIVE.cond.notify_all()
-        if run.sent:
+        if sid and bid != "home" and _shell(run, sid, first):
+            # nothing landed: put the empty session away and drop the record, so the next try
+            # on this card starts clean instead of reusing a shell
+            try:
+                archive_session(sid)
+            except Exception:
+                pass
+            update_surface(bid, session_id=None)
+        elif run.sent:
             rec = get_surface(bid) or {}
             update_surface(bid, last_activity=time.time(), turns=int(rec.get("turns") or 0) + 1)
         # Drain one held queue item after a NORMAL finish (a steer sends its own next run).

@@ -1,5 +1,5 @@
 // 1guy home · the canvas (WS-A1, relational v2). The freeform work pane:
-// attention decides space, the SYSTEM decides layout. The user's drags are judgments, not
+// attention decides space, the SYSTEM decides layout. the user's drags are judgments, not
 // pixels: drop on a cluster = move it there, flick = park, anything else = a session
 // nudge that decays. Stored {x,y} placements are legacy and no longer honored —
 // "tidy the table" clears them (docs/adaptive-surfaces.md REFINEMENT 3).
@@ -57,7 +57,7 @@ export function createCanvas(ctx) {
   const toWorld = (sx, sy) => ({ x: (sx - view.x) / view.z, y: (sy - view.y) / view.z });
   // The stage is overflow:hidden but still scrollable from code: a browser bringing a card into view (Tab onto
   // it, find-in-page, a test's click on an off-screen card) scrolls the stage natively and the world slides
-  // out from under the canvas's own pan (QA: Time lens at 390, 'no card to focus'). Fold any native scroll
+  // out from under the canvas's own pan. Fold any native scroll
   // back into the view: the card stays where the browser put it, and the pan math stays true.
   stage.addEventListener('scroll', () => {
     const sx = stage.scrollLeft, sy = stage.scrollTop;
@@ -77,7 +77,7 @@ export function createCanvas(ctx) {
       else if (b.project) members[b.project] = (members[b.project] || 0) + 1;
     }
     const clusterOf = (b) => {
-    // The user's cluster judgments (drop on a pile) outrank the system's default assignment
+    // the user's cluster judgments (drop on a pile) outrank the system's default assignment
     // (a preview is the same thing held in the air: pv outranks the store and is never saved)
     const ov = pv.has(b.id) ? { cluster: pv.get(b.id) } : store.get(b.id);
     if (ov && ov.cluster && ov.cluster !== b.id) return ov.cluster;
@@ -105,7 +105,7 @@ export function createCanvas(ctx) {
   }
 
   // ------------------------------------------------------------ lenses: same nodes, other layouts
-  // A lens is only a different plan: which blocks show, how they group, how the groups pack.
+  // A lens is only a different plan(): which blocks show, how they group, how the groups pack.
   // The card elements are the same ones, so switching lenses is travel (setLens), never a re-render.
   //   time  — a week strip, laid out by time.js (the Time lens owns days, hours and drops)
   //   inbox — what's waiting on the user (block.inbox), grouped by why, decisions as buttons on the face
@@ -154,7 +154,7 @@ export function createCanvas(ctx) {
       if (!cid) continue;
       const p = store.get(b.id);
       if (p && p.parked) { parked.push(b); continue; }
-      // legacy {x,y} placements no longer pull cards out of the system layout (Nov 9)
+      // legacy {x,y} placements no longer pull cards out of the system layout
       if (isDormant(b)) dormant.push(b);      // v1.1: dormant folds inside its cluster (not the rail)
       flow.push(b);
     }
@@ -392,7 +392,7 @@ export function createCanvas(ctx) {
     memo.clusters = P.clusters.map((c) => c.id);
     L = { items, clusters, bounds: { w: maxX, h: maxY }, plan: P };
 
-    // The user's nudges (session-only, decay on reload) ride on top of the system position
+    // the user's nudges (session-only, decay on reload) ride on top of the system position
     for (const [id, n] of nudges) {
       const it = items.get(id);
       if (it) { it.x = n.x; it.y = n.y; it.nudged = true; }
@@ -1053,7 +1053,7 @@ export function createCanvas(ctx) {
       node.classList.remove('og-pre', 'glide');
       if (!go) continue;
       if (first.has(id)) {
-        // an in-out glide, not a spring: the card must be seen LEAVING its old spot ( — a
+        // an in-out glide, not a spring: the card must be seen LEAVING its old spot (— a
         // front-loaded ease had the new layout standing after 200ms and the switch read as a cut)
         node.animate([{ transform: first.get(id) }, { transform: baseTransform(id) }],
           { duration: 640, delay: Math.min(320, i * 24), easing: EASE_IN_OUT, fill: 'backwards' });
@@ -1085,7 +1085,7 @@ export function createCanvas(ctx) {
   // ------------------------------------------------------------ preview before yes
   // A proposal's moves, shown before the user says yes: the SAME layout engine runs with the moves held in
   // `pv` (never saved, never logged), so the cards glide to exactly where a yes would put them, and
-  // a thin line runs back to where each one was. end puts the layout memory back as it was;
+  // a thin line runs back to where each one was. end() puts the layout memory back as it was;
   // end(true) is the yes: the page has stored the placements, the cards simply stay.
   let pvMemo = null;
   const pvLines = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -1265,7 +1265,7 @@ export function createCanvas(ctx) {
     }
   }
 
-  // ------------------------------------------------------------ judgments + tidy (Nov 9)
+  // ------------------------------------------------------------ judgments + tidy
   // A drag is never stored as pixels. It is one of: a cluster judgment (persisted
   // relationally in placements.cluster), a nudge (session-only), a park (rail), or a
   // tidy (reset to system layout). Every judgment logs to the ledger (/api/judgment).
@@ -1318,7 +1318,7 @@ export function createCanvas(ctx) {
   // opens a new thread about them, talk.js) · group (each one a cluster judgment, the same as a drop
   // on a pile) · put away (the same put-away as a flick, one judgment each).
   // a pile's 'turn into a brief' is quiet until the pointer is in that pile, on its ground or on one of
-  // its cards (five of them always on were the most repeated words on the desk). Touch keeps
+  // its cards. Touch keeps
   // them: there is no hover there (home.css).
   let overPile = null;
   document.addEventListener('pointerover', (e) => {

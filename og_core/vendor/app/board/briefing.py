@@ -27,7 +27,7 @@ import time
 
 from . import util
 
-MAX_PICKS = 200   # v1.2: the briefing is an unbounded horizontal rail — no 3-card cap
+MAX_PICKS = 200   # v1.2: the briefing is an unbounded horizontal rail (the user) — no 3-card cap
 PER_PROJECT = 2
 DUE_SOON_D = 3
 ACT_KINDS = {"task", "crew", "proposal"}
@@ -130,7 +130,7 @@ _ASIDE = re.compile(r"^\s*(?:heads[ -]?up|fyi|note|reminder|ps|p\.s\.)\b", re.I)
 def tidy_line(line):
     """His opener is ONE short line. A written line may arrive as three sentences with a heads-up
     and a clock time baked in ("…approve the restart so it runs at 4:13pm"), and it is cached, so it
-    gets read hours later (seen on a real board). Keep at most the first two sentences, drop any
+    gets read hours later (the user's board). Keep at most the first two sentences, drop any
     that is an aside or names a time of day; '' when nothing usable is left (the caller falls back
     to the template). A heads-up belongs on its own card, never in the opener."""
     parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", str(line or "").strip()) if p.strip()]

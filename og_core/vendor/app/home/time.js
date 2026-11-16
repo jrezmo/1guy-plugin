@@ -1,4 +1,4 @@
-// 1guy home · the Time lens (Lane D 2026). Time is a place: anything with a time
+// 1guy home · the Time lens (Lane D). Time is a place: anything with a time
 // lives here at its day (and hour), and dropping a card on a day schedules it
 // (docs/card-grammar.md §6, adaptive-surfaces.md REFINEMENT 6).
 // canvas.js only asks two things of it: plan(live) — which days, which cards in each — and

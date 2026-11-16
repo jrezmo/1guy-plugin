@@ -284,7 +284,7 @@ body.og-focusing .og-chip:not(.og-focus) { opacity: .5; }
 .og-cap.on { opacity: 1; animation: og-cap-in 420ms var(--spring); }
 @keyframes og-cap-in { from { opacity: 0; scale: .94; translate: -6px 0; } to { opacity: 1; scale: 1; translate: 0 0; } }
 
-/* The user's line, bottom-centre above the talk bar, with a mic dot */
+/* the user's line, bottom-centre above the talk bar, with a mic dot */
 #og-jline {
   position: fixed; z-index: 42; left: calc((100vw - var(--og-rail-w)) / 2); bottom: calc(78px + var(--og-sab));
   display: flex; align-items: center; gap: 10px; max-width: min(620px, calc(100vw - var(--og-rail-w) - 32px));

@@ -1,5 +1,5 @@
 /**
- * 1guy desktop half (v1.0.20): one companion surface on top of Hermes.
+ * 1guy desktop half (v1.0.21): one companion surface on top of Hermes.
  *
  * What it registers:
  *   - a full page at /1guy + sidebar row "1guy" + ⌘K "Open 1guy": the canvas
@@ -46,7 +46,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Fragment, jsx, jsxs } from 'react/jsx-runtime'
 
 const ID = '1guy'
-const VERSION = '1.0.20'
+const VERSION = '1.0.21'
 const PAGE_PATH = '/1guy'
 const INTENTS = ['stack', 'tab', 'window', 'main', 'in-place']
 
@@ -176,6 +176,10 @@ async function relayRun(job) {
     } else if (job.kind === 'stop') {
       const runtime = relay.runtimeOf.get(job.session_id)
       if (runtime) await host.request('session.interrupt', { session_id: runtime })
+    } else if (job.kind === 'archive') {
+      // a finished or long-quiet card's session leaves the session list (messages kept);
+      // opening the card again brings it back. Stored id: archive works on sessions not in memory.
+      await host.request('session.archive', { session_id: job.session_id, archived: job.archived !== false })
     }
   } catch (e) {
     relayEnd(turn)

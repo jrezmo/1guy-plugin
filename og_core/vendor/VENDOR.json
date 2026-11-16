@@ -1,9 +1,9 @@
 {
   "source": "1guy",
   "ref": "main",
-  "sha": "8e711058f8dea6fac186785b644e91f6a6af0555",
+  "sha": "6959bc6a1880c55f6a8a071942482de14ea32496",
   "files": 89,
-  "scrubbed_files": 27,
+  "scrubbed_files": 52,
   "routes": [
     "board",
     "briefing",
@@ -22,6 +22,16 @@
     "home/core.js",
     "home/doors.js",
     "home/doors.js",
-    "home/talk.js"
+    "home/talk.js",
+    "board/headlines.py",
+    "board/headlines.py",
+    "board/widgets.py",
+    "board/widgets.py",
+    "board/widgets.py",
+    "board/widgets.py",
+    "board/widgets.py",
+    "board/widgets.py",
+    "board/mailcal.py",
+    "board/mailcal.py"
   ]
 }

@@ -1,7 +1,7 @@
 // plugin: one of the user's Hermes plugin surfaces, as a tile under project:hermes.
 // The card says the human name and the one-line what/why. Opening it is the card's
 // `open` action (focus.js puts it in the ⋯ slot); a surface with no url says so here.
-// Faces go through headline so no raw ids/paths land on the canvas.
+// Faces go through headline() so no raw ids/paths land on the canvas.
 import { html, mount, plain, headline } from './util.js';
 
 export const icon = '◫';

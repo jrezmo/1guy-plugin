@@ -17,7 +17,7 @@ export function card(block, el) {
     briefFace(block, el, { icon, kicker: 'a conversation', touch: statusTouch(block) });
     return;
   }
-  const H = headline(block);   // face goes through headline/plain — never raw title
+  const H = headline(block);   // face goes through headline()/plain — never raw title
   face(block, el, {
     icon, kindLabel: 'talk', status: statusTouch(block),
     title: H.title,

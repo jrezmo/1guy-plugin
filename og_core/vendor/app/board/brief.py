@@ -141,7 +141,7 @@ def plain(items, name=None, more=0):
     what = f"the {name} pile" if name else "the cards you picked"
     asks = [it for it in items if it["status"] in ("waiting on you", "broke")]
     first = (asks or items)[0]
-    # a short title: the brief's own card shows it on one line ("loose ends: where it…" was getting cut)
+    # a short title: the brief's own card shows it on one line
     out = [f"# {util.clip(name, 40) if name else 'what you picked'} · brief", "",
            f"## {SECTIONS[0]}", f"{n} card{'' if n == 1 else 's'} from {what}, as they read right now.", "",
            f"## {SECTIONS[1]}"]

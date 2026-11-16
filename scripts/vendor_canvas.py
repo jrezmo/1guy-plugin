@@ -65,6 +65,40 @@ PATCHES = [
     ("home/doors.js", "  sample.onclick = () => location.assign(sampleUrl(true));",
      "  sample.onclick = () => (window.ONEGUY_EMBED ? hostSample(true) : location.assign(sampleUrl(true)));"),
     ("home/talk.js", "(tap to send it as a conversation)", "(tap to talk it through instead)"),
+    # Release hardening (catalog rules 11 and 13), made by hand in 1.0.20 and kept here so a
+    # re-vendor cannot quietly undo it: no key file is ever read, no model name is assumed, and
+    # the direct Google readers are off for good (the plugin holds no credentials and makes no
+    # network calls of its own).
+    ("board/headlines.py", 'ENV_PATH = os.path.join(util.HOME, ".hermes", ".env")',
+     "ENV_PATH = os.devnull   # never reads a key file"),
+    ("board/headlines.py", '        _model_label = "z-ai/glm-5.3-flash"', '        _model_label = "host"'),
+    ("board/widgets.py",
+     "                   The older direct readers stay for a home that asks for them by env flag and\n"
+     "                   never run otherwise: ONEGUY_EMAIL_GLANCE=on (board/email_glance.py, a Gmail\n"
+     "                   GET-only glance; token file in ONEGUY_GOOGLE_TOKEN) and ONEGUY_CALENDAR=on\n"
+     "                   (a Google-calendar GET-only feed with the same token).",
+     "                   The plugin build has no direct mail or calendar reader: it makes no network\n"
+     "                   calls and holds no credentials."),
+    ("board/widgets.py", 'util.CFG.setdefault("email_glance", os.environ.get("ONEGUY_EMAIL_GLANCE", "off") == "on")',
+     'util.CFG["email_glance"] = False      # plugin build: no direct mail reader'),
+    ("board/widgets.py",
+     'util.CFG.setdefault("calendar_feed", os.environ.get("ONEGUY_CALENDAR", "off") == "on")\n'
+     'util.CFG.setdefault("calendar_api", os.environ.get("ONEGUY_CALENDAR_API", "https://www.googleapis.com/calendar/v3"))',
+     'util.CFG["calendar_feed"] = False     # plugin build: no direct calendar reader\n'
+     'util.CFG["calendar_api"] = ""'),
+    ("board/widgets.py", '"""The direct email glance (only with ONEGUY_EMAIL_GLANCE=on). Read-only; on failure, says so."""',
+     '"""The direct email glance (disabled in the plugin build). Read-only; on failure, says so."""'),
+    ("board/widgets.py",
+     '    url = util.CFG["calendar_api"].rstrip("/") + path + "?" + urllib.parse.urlencode(params)\n'
+     '    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {tok}"})   # GET only\n'
+     '    return json.load(urllib.request.urlopen(req, timeout=5))',
+     '    raise RuntimeError("the plugin build has no direct calendar reader")'),
+    ("board/widgets.py",
+     "    # ONEGUY_CALENDAR_TOKEN: a static bearer for stub calendars (tests, the demo world), never a real OAuth token\n"
+     '    tok = token or os.environ.get("ONEGUY_CALENDAR_TOKEN") or email_glance.access_token(need="calendar")',
+     "    tok = token"),
+    ("board/mailcal.py", "<priya@x.org>' -> 'Priya Shah'", "<priya@example.org>' -> 'Priya Shah'"),
+    ("board/mailcal.py", "<priya@x.org>' -> 'priya@x.org'", "<priya@example.org>' -> 'priya@example.org'"),
 ]
 # Modules replaced by a stub: sources that only exist on the private box (GitHub issues through
 # the gh CLI, a media folder, another plugin's tiles) and the Gmail glance, which reads and
@@ -137,6 +171,35 @@ def the_user(text):
     text = text.replace('"J via bar', '"the talk bar').replace("J's (the user's)", "the user's")
     text = re.sub(r"(\\[nt])J\b", r"\1The user", text)          # "\nJ says:" (no word boundary after an escape)
     return _INITIAL.sub(sub, text)
+
+
+# Build-diary notes in comments: QA round refs ("QA r18 #2:", "(QA r6 #5)"), dates ("Nov 9",
+# "(J, Nov 10)") and, in the client's comments, the initial. They name the private build, so the
+# release scrubbed them by hand once (1.0.20); this makes every re-vendor do the same.
+_NOTES = [
+    (re.compile(r"\s*\((?:real-board )?QA[^()]*\)"), ""),                     # "(QA r6 #5)", "(QA r29 #3: …)"
+    (re.compile(r"\s*[—-]\s*QA r\d+(?: #\d+)?(?=\))"), ""),                   # "the topic — QA r23 #2)"
+    (re.compile(r"QA r\d+(?: #\d+)?(?: \(phone\))?:?\s*"), ""),               # "QA r18 #2: ", or split over lines
+    # dates go with their own separator or brackets, never touching anything else (code has "()")
+    (re.compile(r"\s*\((?:Nov|Oct) \d{1,2}(?: 2026)?\)"), ""),                # " (Nov 9)"
+    (re.compile(r"\s*[,—]\s*(?:Nov|Oct) \d{1,2}(?: 2026)?(?:, \d{1,2}:\d\d[ap]m)?\b"), ""),  # ", Nov 10, 5:39pm"
+]
+_COMMENT = re.compile(r"//[^\n]*|/\*[\s\S]*?\*/")
+_INITIAL_CLIENT = [(re.compile(r"\bJ's\b"), "the user's"), (re.compile(r"\bJ\b"), "the user")]
+NOTE_FORBIDDEN = re.compile(r"QA r\d+")
+
+
+def notes(text, client):
+    """Strip build-diary notes. Python: everywhere (prompts and docstrings carry them too).
+    Client JS/CSS: only inside comments, where the initial also becomes "the user" (in code a
+    'J' can be a key)."""
+    def clean(s, initial):
+        for rx, rep in _NOTES + (_INITIAL_CLIENT if initial else []):
+            s = rx.sub(rep, s)
+        return s
+    if not client:
+        return clean(text, False)
+    return _COMMENT.sub(lambda m: clean(m.group(0), True), text)
 
 
 def scrub_rules():
@@ -255,8 +318,10 @@ def extract(repo, ref, dest):
             for rx, rep in rules:
                 new = rx.sub(rep, new)
             if name.endswith(".py"):
-                new = the_user(new)
-            hit = next((m for m in (f.search(new) for f in forbidden) if m), None)
+                new = notes(the_user(new), client=False)
+            elif name.endswith((".js", ".css")):
+                new = notes(new, client=True)
+            hit = next((m for m in (f.search(new) for f in forbidden + ([NOTE_FORBIDDEN] if name.endswith((".py", ".js", ".css")) else [])) if m), None)
             if hit:
                 sys.exit(f"vendor: {os.path.relpath(path, dest)} still names the private box: "
                          f"{hit.group(0)!r}; extend SCRUB")

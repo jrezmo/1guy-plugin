@@ -4,8 +4,8 @@
 // When it's about a card, that card docks at the column's left edge (the canvas shifts left).
 //
 //   OG.column.open(block, { question?, why? })   // question = the promote-morph's ask
-//   OG.column.close
-//   OG.column.current                          // the block it's bound to (talk.js routes sends here)
+//   OG.column.close()
+//   OG.column.current()                          // the block it's bound to (talk.js routes sends here)
 //
 // The bloom keeps the face and actions; the column holds the conversation — the bloom's
 // thread slot unmounts when the column opens for the same block (never two copies).

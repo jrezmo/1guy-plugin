@@ -1,7 +1,7 @@
 // 1guy home · the stage (Phase 4, "show me"; docs/unified-audit.md §5.2, A4 L6).
 //
 //   OG.stage.open({ kind: 'url'|'article'|'html'|'chart'|'image', src, title, why?, urgent?, spec? }, { asked? })
-//   OG.stage.close
+//   OG.stage.close()
 //
 // Renderers: own/tailnet pages → iframe (allowlist; anything else falls through to the reader);
 // article → GET /api/reader (server-side reader view, plain text parts, rendered with textContent);

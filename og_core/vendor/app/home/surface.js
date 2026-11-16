@@ -5,7 +5,7 @@
 // ONE INPUT, EVER (v1.1): the bloom's thread slot shows the history, the streaming reply and the
 // chips, nothing to type into. The global talk bar (talk.js) is the only input; with a block
 // focused it talks to that block's surface. OneGuy.surface.say(block, text) is the programmatic
-// send (the shell's decide, 'work on this with me').
+// send (the shell's decide(), 'work on this with me').
 //
 // Streaming: the server consumes the Hermes SSE; we long-poll /api/surface/poll and reveal the
 // reply word by word. Interrupting = talking while he streams. The tag is read from the words
@@ -21,7 +21,7 @@ if (!document.querySelector('link[data-ws="F"]')) {
   document.head.append(l);
 }
 
-// ---- the user's tone → tag (mirrors classify in app/routes/surface.py; keep in sync) ----
+// ---- the user's tone → tag (mirrors classify() in app/routes/surface.py; keep in sync) ----
 const STEER_LEAD = /^\W*(wait|no+|nope|nah|actually|instead|stop|hold on|hang on|scratch that|forget that|never ?mind|rather)\b/i;
 const STEER_ANY = /\binstead\b|\bscratch that\b|\bforget (that|it)\b/i;
 const QUEUE_LEAD = /^\W*(also|and add|and also|btw|by the way|oh,? and|plus|one more( thing)?|add)\b/i;
@@ -84,7 +84,7 @@ function removeChip(id) {
 }
 
 // ---------------------------------------------------------------- one surface per block
-// An error in his voice, not the server's (the column printed "RuntimeError: API_SERVER_KEY not found…").
+// An error in his voice, not the server's.
 // Anything that means "Hermes didn't pick up" gets one plain line; anything else keeps its words, minus the class name.
 export function plainError(msg) {
   const m = String(msg || '').trim();
@@ -100,7 +100,7 @@ class Surface {
     this.opened = null;
     this.live = null;             // {runId, text(received), shown, done, turn}
     this.followed = new Set();
-    this.views = new Set();       // listeners: {onChange}
+    this.views = new Set();       // listeners: {onChange()}
     this.parked = [];             // didn't-land pieces not yet summoned (one per cut)
     this.queueChips = new Map();  // queue item id → chip id
   }
@@ -176,7 +176,7 @@ class Surface {
     L.done = true;
     const cut = { runId: L.runId, shown: L.shown, turn: L.turn };
     L.turn.cut = true;
-    L.turn.live = false;          // tick stops on frozen, so finish never runs for a cut turn
+    L.turn.live = false;          // tick() stops on frozen, so finish() never runs for a cut turn
     L.turn.unheard = L.text.slice(L.shown);
     L.pending = '';
     this.notify();
@@ -368,7 +368,7 @@ class Claim {
     this.changed();
     return this;
   }
-  // wait on the run a send opened: `sent` is what Surface.send answered
+  // wait on the run a send opened: `sent` is what Surface.send() answered
   bind(s, sent) {
     if (this.over || this.state !== 'open') return this;
     if (!s || !sent || !sent.run_id) { if (sent && sent.queued) this.end(); else this.fail(); return this; }

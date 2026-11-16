@@ -35,8 +35,8 @@ const GLYPH_T = { command: 'this looks like a command: it flies to its target (t
   conversation: 'this looks like a conversation: it opens the column (tap to send it as a command)' };
 
 let focused = null;          // the focused block (from 'focus' events)
-let guess = null;            // The user's manual glyph override for the current line
-let tag = null;              // The user's manual say/steer/queue override while he's talking (was never declared: typing over him threw)
+let guess = null;            // the user's manual glyph override for the current line
+let tag = null;              // the user's manual say/steer/queue override while he's talking (was never declared: typing over him threw)
 let repaint = () => {};
 let undoT = null;
 
@@ -170,7 +170,7 @@ function build() {
       return;
     }
     // even with a conversation open the line goes through the router first: "start with the PR
-    // instead" is about ANOTHER card, and the router knows which. conversation keeps
+    // instead" is about ANOTHER card, and the router knows which. conversation() keeps
     // everything that isn't clearly about another card in the thread that's open.
     submit(text, g);
   });
@@ -324,7 +324,7 @@ async function submit(text, g) {
   }
   if (shape === 'landed') { if (c) setTimeout(() => c.land(), 430); return landed(r, text); }
   if (shape === 'failed') { if (c) c.fail(); return failed(r, text); }
-  if (c && shape !== 'conversation') c.end();   // confirm / clarify / show: The user acts next, nothing is being worked on
+  if (c && shape !== 'conversation') c.end();   // confirm / clarify / show: the user acts next, nothing is being worked on
   if (shape === 'confirm') return confirmOnTarget(r, text);
   if (shape === 'clarify') return promote(r, text);
   if (shape === 'show') return show(r, text);
@@ -493,7 +493,7 @@ async function conversation(r, text, c) {
   await send(OG.column.surface());
 }
 
-// programmatic send (decide etc.) — unchanged contract
+// programmatic send (decide() etc.) — unchanged contract
 async function talk(text, mode) {
   if (!(focused && OG.surface && OG.surface.isMounted && OG.surface.isMounted(focused.id))) OG.caption.j(text);
   const api = await surfaceApi();

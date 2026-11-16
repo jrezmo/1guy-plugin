@@ -1,5 +1,5 @@
 // 1guy home · gestures. Pointer events only (mouse, pen, touch), no libraries.
-// tap = focus (bloom) · drag = a JUDGMENT, never a position (Nov 9): drop on a
+// tap = focus (bloom) · drag = a JUDGMENT, never a position: drop on a
 // cluster = move it there (persisted), anything else = a session nudge that
 // decays · fast release toward the right edge = FLICK into the rail ·
 // empty space drag = pan (with a little momentum) ·

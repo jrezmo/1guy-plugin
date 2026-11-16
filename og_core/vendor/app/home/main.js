@@ -100,7 +100,7 @@ railReady = true;
 // one focus, three places: the bloom, its rail entry (if it has one), the talk bar's 'about:' chip
 OneGuy.on('focus', ({ block } = {}) => {
   rail.setFocus(block ? block.id : null);
-  // phase35 (A6): The user has seen a pick — tell the selector so it drops down the pool
+  // phase35 (A6): the user has seen a pick — tell the selector so it drops down the pool
   if (block && block.fy_why) api.post('/api/briefing/seen', { id: block.id })
     .catch((e) => console.warn('[home] seen failed', e));
 });
@@ -111,7 +111,7 @@ let parkedChip = null;
 function placeParked() {
   if (!parkedChip) return;
   const bar = document.querySelector('.tk-bar'), r = bar && bar.getBoundingClientRect();
-  if (r && r.width) Object.assign(parkedChip.el.style, { left: r.left + 'px', width: r.width + 'px', bottom: window.innerHeight - r.top + 52 + 'px' });   // one row up: The user's own line echoes right above the bar for a moment
+  if (r && r.width) Object.assign(parkedChip.el.style, { left: r.left + 'px', width: r.width + 'px', bottom: window.innerHeight - r.top + 52 + 'px' });   // one row up: the user's own line echoes right above the bar for a moment
 }
 function dropParked() {
   const p = parkedChip;
@@ -281,7 +281,7 @@ H.applyLocal = () => {
   OneGuy.emit('board', { board: OneGuy.board });
 };
 
-// ------------------------------------------------------------ tidy the table (Nov 9)
+// ------------------------------------------------------------ tidy the table
 // the antidote to the mess: one tap re-flows everything from the system layout.
 // Visible whenever there's something to tidy (nudges or stored placements).
 const tidyBtn = $('#og-tidy');
@@ -578,7 +578,7 @@ async function boot() {
   setInterval(() => { if (!document.hidden) refresh({ quiet: true }); }, 60000);
   // the first board a cold server hands out is its quick one; slower sources (his piles, his headlines) ride the
   // next build. Look again early, three times, so the rail fills in within seconds instead of at the one-minute tick
-  // (a stranger's first open sat on three cards while six were ready).
+  //.
   // Only while he is still on the first screen: with a card open a refresh can re-key it mid-reply.
   for (const ms of [6000, 12000, 20000]) setTimeout(() => { if (!document.hidden && !canvas.focusId && !document.body.classList.contains('og-col-open')) refresh({ quiet: true }); }, ms);
 }

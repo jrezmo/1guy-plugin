@@ -1,4 +1,4 @@
-"""talk: the talk bar's own interactions, from threads.json.
+"""talk: the talk bar's own interactions, from threads.json (request-router).
 
 Every routed "new" interaction mints a `talk:<ulid>` thread (threads.start via
 /api/threads/open, opened_from='talk-router'). Those threads are real work with a

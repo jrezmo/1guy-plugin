@@ -27,12 +27,19 @@ import datetime as _dt
 import json
 import os
 import re
+import threading
 
 from . import jobs, ledger, util
 from .block import make
 
 JOB_NAME = "1guy-mail-cal"
-SCHEDULE = "0 7-22 * * *"        # hourly, 7am-10pm, read in the profile's (the user's) timezone
+# Three reads a day, in the profile's (the user's) timezone. Each read is a Hermes cron run, and
+# every cron run is a session in the user's session list and a model call they pay for, so the
+# job stays slow and a look at a stale board asks for a fresh read instead (freshen()).
+SCHEDULE = "0 7,12,17 * * *"
+FRESH_S = 3600                   # a digest younger than this is fresh enough for a look
+ASK_GAP_S = 3600                 # at most one look-triggered read an hour
+RUN_TIMEOUT_S = 900              # `hermes cron run` is synchronous: a whole agent turn
 MAX_EMAIL, MAX_EVENTS = 15, 40
 EMAIL_DAYS, CAL_DAYS = 3, 7
 WHY_WORDS = 12
@@ -49,7 +56,9 @@ archive, delete, label, mark read, accept, decline, create or edit anything. Do 
 Collect:
 - email: messages from the last {EMAIL_DAYS} days that are unread or that need a reply from me, newest
   first, at most {MAX_EMAIL}. Skip newsletters, receipts and automated notices unless they need an answer.
-- calendar: every event in the next {CAL_DAYS} days starting now, earliest first, at most {MAX_EVENTS}.
+- calendar: every event from the start of today (midnight, my timezone) through the next {CAL_DAYS} days,
+  earliest first, at most {MAX_EVENTS}. Include today's events that already ended: today is the whole day.
+  Keep each timed event's real start and end with its UTC offset; never turn a timed event into all day.
 
 Then print EXACTLY ONE JSON object and nothing else (no prose, no code fence):
 
@@ -158,6 +167,25 @@ def create_command():
     """The exact argv that creates the job (`hermes cron create --help`, Hermes 0.23). No
     --timezone: the schedule is read in the profile's timezone, which is the user's."""
     return ["hermes", "cron", "create", SCHEDULE, PROMPT, "--name", JOB_NAME, "--deliver", "local"]
+
+
+def _schedule_of(job):
+    s = job.get("schedule")
+    return s.get("expr") if isinstance(s, dict) else s
+
+
+def sync_command(job):
+    """-> the argv that brings an installed job's prompt and schedule up to PROMPT and SCHEDULE, or
+    None when both already match. `create` runs once, so without this a fix never reaches a job
+    made before it (an hourly job from 1.0.x stays hourly)."""
+    if not job or not job.get("id"):
+        return None
+    args = []
+    if job.get("prompt") != PROMPT:
+        args += ["--prompt", PROMPT]
+    if _schedule_of(job) != SCHEDULE:
+        args += ["--schedule", SCHEDULE]
+    return ["hermes", "cron", "edit", str(job["id"])] + args if args else None
 
 
 def run_command(job_id):
@@ -442,6 +470,7 @@ def blocks(now=None, want=("calendar", "email")):
     now = now or util.now()
     try:
         dg = digest(now)
+        freshen(dg, now)
         cap = {"email": False, "calendar": False, "via": []} if dg["job"] else capability()
         tiles, events, cards = [], [], []
         if "calendar" in want:
@@ -615,8 +644,41 @@ def _run(argv, run=None):
         return 1, f"{type(e).__name__}: {e}"
 
 
+def _spawn(fn):
+    """A read takes minutes (a whole agent turn), so it never holds a request or a board build."""
+    threading.Thread(target=fn, daemon=True, name="1guy-mailcal-read").start()
+
+
+def _read_now(job, run=None, sync=True):
+    """Sync the job (prompt, schedule) and run it once, in the background. A job created a moment
+    ago already has both, whatever the half-read record says."""
+    argvs = [a for a in ((sync_command(job) if sync else None), run_command(job["id"])) if a]
+    _spawn(lambda: [_run(a, run) for a in argvs])
+
+
+def freshen(dg, now=None, run=None):
+    """A look at a stale board asks for one fresh read: the job runs three times a day, and a board
+    being built means someone (or the watcher) is looking. At most one ask an hour, only for a job
+    1guy set up, and only where a runner exists. -> what it did, in a word (for tests and diag)."""
+    now = now or util.now()
+    job = (dg or {}).get("job")
+    if not job or not job.get("id"):
+        return "no job"
+    if (run or runner) is None or os.environ.get("ONEGUY_MAILCAL_FRESHEN", "on") == "off":
+        return "off"
+    if dg.get("age_s") is not None and dg["age_s"] < FRESH_S:
+        return "fresh"
+    prefs = _prefs()
+    if now - float(prefs.get("asked_at") or 0) < ASK_GAP_S:
+        return "asked recently"
+    prefs["asked_at"] = now
+    _write_prefs(prefs)
+    _read_now(job, run)
+    return "asked"
+
+
 def setup(run=None):
-    """The user's yes: create the job (once), then run it once so data arrives in a minute.
+    """The user's yes: create the job (once), then run it once so data arrives in a minute or two.
     The yes is a judgment in the ledger. -> (result, http status)"""
     cap = capability()
     if not (cap["email"] or cap["calendar"]):
@@ -633,19 +695,22 @@ def setup(run=None):
             m = re.search(r"Created job:\s*(\S+)", out)
             job = {"id": m.group(1)} if m else None
     ran = False
-    if job:
-        ran = _run(run_command(job["id"]), run)[0] == 0
+    if job and (run or runner) is not None:
+        _read_now(job, run, sync=not created)      # sync is best effort: an old prompt still works, just worse
+        ran = True
     try:
         ledger.append("decide", "widget:email", target="yes", note="keep an eye on my email and calendar")
         prefs = _prefs()
-        if prefs.pop("declined_at", None):
-            _write_prefs(prefs)
+        prefs.pop("declined_at", None)
+        if ran:
+            prefs["asked_at"] = util.now()          # the read just asked for counts as this hour's ask
+        _write_prefs(prefs)
     except OSError:
         pass
     util.CACHE.clear("jobs")
     util.CACHE.clear("widgets")
     return {"ok": True, "op": "setup", "created": created, "ran": ran, "job_id": (job or {}).get("id"),
-            "say": WAITING if ran else "it's set up. the first read comes on the hour."}, 200
+            "say": WAITING if ran else "it's set up. the first read comes with the next scheduled one."}, 200
 
 
 def _write_prefs(prefs):

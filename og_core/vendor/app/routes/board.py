@@ -13,13 +13,34 @@
 
 All logic lives in app/board/ (one module per source + attention + actions).
 """
+import os
+import threading
+
 import board as _board            # app/board/ (app/ is on sys.path under serve.py)
+import threads as _threads        # app/threads.py; the surface runner hands it its globals
 from board import actions as _actions
 from board import sample as _sample
 
 
 def _flag(query, key):
     return str(query.get(key, "")).lower() in ("1", "true", "yes")
+
+
+def _tidy(board):
+    """A whole board just got built: let the surface runner put away finished cards' sessions
+    (routes/surface.py tidy, throttled there). Never sinks the board."""
+    g = getattr(_threads, "RUNNER_GLOBALS", None) or {}
+    fn = g.get("tidy")
+    if not fn or os.environ.get("ONEGUY_THREAD_TIDY", "on") == "off":   # decided now, not on the thread
+        return
+    path = g.get("THREADS_FILE")        # bound now: a test that swaps homes never gets a late write
+
+    def run():
+        try:
+            fn(board, path=path)
+        except Exception:   # noqa: BLE001
+            pass
+    threading.Thread(target=run, daemon=True, name="1guy-tidy").start()   # archive calls never hold the board
 
 
 def get_board(query, body):
@@ -29,7 +50,9 @@ def get_board(query, body):
     if only:
         res = _board.run_sources(force=_flag(query, "fresh"), only=only)
         return _board.assemble(res, explain=_flag(query, "explain"))
-    return _board.build_board(force=_flag(query, "fresh"), explain=_flag(query, "explain"), here=_flag(query, "here"))
+    board = _board.build_board(force=_flag(query, "fresh"), explain=_flag(query, "explain"), here=_flag(query, "here"))
+    _tidy(board)
+    return board
 
 
 def post_task(query, body):

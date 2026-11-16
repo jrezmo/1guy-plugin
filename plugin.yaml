@@ -1,5 +1,5 @@
 name: 1guy
-version: "1.0.20"
+version: "1.0.21"
 description: "Hermes does the work. 1guy brings it back to you. One desk over your whole Hermes: every session, scheduled job and to-do is a card, every card opens its own Hermes session, and one companion on top tells you the few things that need you."
 author: jrezmo
 requires_hermes: ">=0.23.0"

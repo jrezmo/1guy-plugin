@@ -23,7 +23,7 @@ export function createRail(root, { isMobile, onSummon, onCollapse }) {
   const managed = { parked: [], dormant: [] };
   let dormantOpen = false;
   let drawerOpen = false;
-  let forced = false;          // The user opened the empty rail from its tab
+  let forced = false;          // the user opened the empty rail from its tab
   let collapsed = null;
   let focusId = null;          // the focused block: its chip (or a chip that belongs to it) wears the focus ring
 

@@ -2,7 +2,7 @@
 // or buzzes when off — needs-you included. Silence is a promise.
 //
 //   OG.sounds.play('send'|'land'|'done'|'needs-you'|'error'|'whoosh'|'open'|'away')
-//   OG.sounds.toggle / OG.sounds.set(bool) -> boolean      OG.sounds.on
+//   OG.sounds.toggle() / OG.sounds.set(bool) -> boolean      OG.sounds.on
 //
 // This module owns the whole feature: the voices (the lab's, plus three for the canvas), the
 // phone haptics, WHEN they fire (it listens to the bus; nobody else has to remember to call it),

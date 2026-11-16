@@ -15,9 +15,14 @@ VERSION="$(sed -n 's/^version: "\(.*\)"/\1/p' plugin.yaml)"
 # Dated like HEAD, so the same tree always gives the same commit id (re-running is harmless and
 # the id written into .release/ stays the one to push).
 WHEN="$(git log -1 --format=%cI HEAD)"
+# PUBLIC_PARENT=<published release commit> stacks this release on the one already on GitHub, so
+# the push is a fast-forward and the commit the catalog pins today stays reachable until the
+# catalog PR merges. Unset = a parentless commit (the very first release only).
+PARENT_ARGS=()
+if [ -n "${PUBLIC_PARENT:-}" ]; then PARENT_ARGS=(-p "$(git rev-parse --verify "$PUBLIC_PARENT^{commit}")"); fi
 SHA=$(GIT_AUTHOR_NAME="$NAME" GIT_AUTHOR_EMAIL="$EMAIL" GIT_COMMITTER_NAME="$NAME" GIT_COMMITTER_EMAIL="$EMAIL" \
   GIT_AUTHOR_DATE="$WHEN" GIT_COMMITTER_DATE="$WHEN" \
-  git commit-tree "HEAD^{tree}" -m "1guy $VERSION: 1guy, one companion surface on top of Hermes
+  git commit-tree "HEAD^{tree}" "${PARENT_ARGS[@]}" -m "1guy $VERSION: 1guy, one companion surface on top of Hermes
 
 Co-Authored-By: Claude Fable 5.2 <noreply@anthropic.com>")
 git branch -f public "$SHA" >/dev/null

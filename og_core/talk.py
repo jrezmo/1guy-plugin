@@ -176,11 +176,24 @@ def _create_session(title):
     return data["session_id"], data.get("title") or title
 
 
+class _Sent:
+    """What a fire-and-forget relay job hands back to a caller that expects a response."""
+
+    def close(self):
+        pass
+
+
 def _upstream(method, path, body=None, timeout=30):
-    """Stand-in for the runner's HTTP call to the API server: only the turn stream is used."""
+    """Stand-in for the runner's HTTP calls to the API server: the turn stream, and archiving a
+    card's session (put away when the card is finished or quiet, brought back when it is opened).
+    The archive rides the relay to the desktop app's own session.archive; it lands whenever a
+    canvas is next open."""
     parts = path.strip("/").split("/")
     if method == "POST" and len(parts) == 5 and parts[:2] == ["api", "sessions"] and parts[3:] == ["chat", "stream"]:
         return _Stream(RELAY.submit("turn", session_id=parts[2], message=(body or {}).get("message") or ""))
+    if method == "PATCH" and len(parts) == 3 and parts[:2] == ["api", "sessions"] and set(body or {}) == {"archived"}:
+        RELAY.submit("archive", session_id=parts[2], archived=bool(body["archived"]))
+        return _Sent()
     raise RuntimeError(f"unsupported upstream call {method} {path}")
 
 

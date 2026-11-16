@@ -1,4 +1,4 @@
-"""The talk bar's request router.
+"""The talk bar's request router (docs/request-router.md).
 
 Runs AFTER talk_resolve says "conversation". One job: decide where this utterance
 lives — the focused block's thread, an existing block thread, a new tasklist item

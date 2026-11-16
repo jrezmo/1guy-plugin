@@ -44,7 +44,11 @@ def test_with_a_skill_he_offers_and_yes_creates_exactly_one_disclosed_job(api, h
     assert st["can"]["email"] and st["can"]["calendar"] and st["job"] is None and not st["declined"]
     r = api.post("/board/mailcal", {"op": "setup"})
     assert r.status_code == 200 and r.json()["ok"], r.text
-    create, run = mailcal.calls
+    for _ in range(50):                             # the first read runs in the background (minutes, for real)
+        if len(mailcal.calls) >= 2:
+            break
+        time.sleep(0.05)
+    create, run = mailcal.calls                     # a job made a moment ago is never 'synced'
     assert create[:3] == ["hermes", "cron", "create"] and create[-4:] == ["--name", "1guy-mail-cal", "--deliver", "local"]
     assert "READ ONLY" in create[4] and "never send" in create[4]            # the job is told to only read
     assert run == ["hermes", "cron", "run", "abc123def456"]
@@ -131,14 +135,18 @@ def test_the_inbox_is_people_waiting_oldest_first_and_a_judgment_hides_one(api, 
     assert mailcal.calls == []                                               # no command ran: the mailbox is never touched
 
 
-def test_the_route_only_ever_runs_the_two_disclosed_commands(api):
+def test_the_route_only_ever_runs_the_disclosed_commands(api):
+    """create / edit / run, and edit and run only on the 1guy-mail-cal job (README, docs/PR.md)."""
     from og_core import talk
     talk.routes()
     import sys
     run = sys.modules["oneguy_routes_mailcal"].run
     assert run(["rm", "-rf", "x"]) == (1, "not a command this route runs")
     assert run(["hermes", "config", "set", "x", "y"])[0] == 1
-    assert sys.modules["oneguy_routes_mailcal"].ALLOWED == (("hermes", "cron", "create"), ("hermes", "cron", "run"))
+    assert run(["hermes", "cron", "run", "someone-elses-job"]) == (1, "only the 1guy-mail-cal job")
+    assert run(["hermes", "cron", "edit", "someone-elses-job", "--prompt", "x"]) == (1, "only the 1guy-mail-cal job")
+    assert sys.modules["oneguy_routes_mailcal"].ALLOWED == (
+        ("hermes", "cron", "create"), ("hermes", "cron", "edit"), ("hermes", "cron", "run"))
 
 
 def test_claim_names_the_cards_a_line_is_about_without_any_model(api):

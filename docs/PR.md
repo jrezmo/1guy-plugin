@@ -55,7 +55,7 @@ Screenshots (pinned to the commit):
 
 | Surface | Use |
 |---|---|
-| Desktop plugin SDK (`desktop/plugin.js`) | one route + sidebar row, two panes, palette commands, a transcript directive; `SandboxedFrame`; `ctx.rest`; `ctx.onEvent`; `host.request` (`session.create`, `session.resume`, `prompt.submit`, `session.interrupt`); `host.openSession`; `ctx.os.openExternal` |
+| Desktop plugin SDK (`desktop/plugin.js`) | one route + sidebar row, two panes, palette commands, a transcript directive; `SandboxedFrame`; `ctx.rest`; `ctx.onEvent`; `host.request` (`session.create`, `session.resume`, `prompt.submit`, `session.interrupt`, `session.archive`); `host.openSession`; `ctx.os.openExternal` |
 | Dashboard backend (`dashboard/plugin_api.py`) | routes under `/api/plugins/1guy/` |
 | Plugin LLM access (`ctx.llm.complete`) | short background calls for card headlines and to route a typed line |
 | Plugin data dir (`plugin_data_dir("1guy")`) | all of its own state |
@@ -84,11 +84,18 @@ the backend. `capabilities` is therefore empty, and no capability ids are reques
 - **Sessions:** talking to a card creates an ordinary Hermes session through the desktop app's
   own gateway connection and sends the message plus that card's context into it. Turns run on
   the user's normal agent with their normal tools and approvals; nothing is auto-approved.
-- **Shell:** three commands, each only on an explicit user action. `hermes cron run <job id>`
-  when the user presses *run now* on a job card and confirms. `hermes cron create '0 7-22 * * *'
-  '<read-only digest prompt>' --name 1guy-mail-cal --deliver local` and then `hermes cron run
-  <that job>` when the user says yes to the email/calendar offer. The route refuses any other
-  argv.
+  When the card is finished or its thread has been quiet 48h (`ONEGUY_THREAD_IDLE_H`), the
+  session is archived through the desktop's `session.archive` (out of the session list,
+  messages kept, unarchived when the card is opened again); at most 10 per 30-minute sweep,
+  never mid-turn, `ONEGUY_THREAD_TIDY=off` disables it. A first turn that fails before Hermes
+  records a message is archived the same way instead of left as an empty session.
+- **Shell:** `hermes cron` only. `hermes cron run <job id>` when the user presses *run now* on a
+  job card and confirms. `hermes cron create '0 7,12,17 * * *' '<read-only digest prompt>'
+  --name 1guy-mail-cal --deliver local` and then `hermes cron run <that job>` when the user says
+  yes to the email/calendar offer. After that, on that job only (the runner checks the id):
+  `hermes cron run` when the board is opened over a digest more than an hour old (at most
+  hourly), and `hermes cron edit <id> --prompt/--schedule` to bring a job made by an older
+  version up to date. The route refuses any other argv.
 - **Email and calendar:** the plugin reads no mail and no calendar and holds no account. It
   checks whether this Hermes has an email/calendar ability by NAME only (folder names under
   `skills/`, keys under `mcp_servers:` in `config.yaml`; no values, no skill bodies), offers the
@@ -100,8 +107,8 @@ the backend. `capabilities` is therefore empty, and no capability ids are reques
 - **Credentials:** none read, none stored. No `.env`, `auth.json` or token files are touched.
 - **Background work:** short-lived threads for headline refresh; *run now* starts
   `hermes cron run <id>` detached (it ends on its own); the `1guy-mail-cal` job, if the user
-  accepts it, recurs hourly 07:00–22:00 until removed with `hermes cron`. No daemon, no
-  self-update.
+  accepts it, recurs three times a day (07:00, 12:00, 17:00) until removed with `hermes cron`;
+  a half-hourly sweep archives finished or quiet cards' sessions. No daemon, no self-update.
 
 ## Things a reviewer will want to know
 

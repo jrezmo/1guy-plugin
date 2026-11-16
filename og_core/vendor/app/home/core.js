@@ -123,7 +123,7 @@ export function headlineOf(b) {
   const sum = plain(b.summary || '');
   // a chat's stock summary ("idle · 10 messages · last: …") is status + count + his own last line, all shown
   // elsewhere on the card: it is not a why
-  // (and its title stays whole: "Notes app: write the export" is the thing, "Notes app" is only the topic — )
+  // (and its title stays whole: "Notes app: write the export" is the thing, "Notes app" is only the topic)
   // What belongs under the title is the last thing he said in it — the question the chat ended on (the
   // lead card was 60% empty). `said` tells a view that shows that line itself (the chat card, the open card's
   // "where it left off") not to print it twice.
@@ -185,7 +185,7 @@ export function briefingOf(board, { parked = () => false } = {}) {
   return { forYou: fy, broke, line };
 }
 
-// Spring easing for the Web Animations API, sampled into CSS linear (Chrome 113+, Safari 17.2+).
+// Spring easing for the Web Animations API, sampled into CSS linear() (Chrome 113+, Safari 17.2+).
 // Falls back to an overshooting cubic-bezier. Motion is never linear: the samples trace a spring.
 const SUPPORTS_LINEAR = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('transition-timing-function', 'linear(0, 1)');
 const springCache = new Map();
@@ -283,7 +283,7 @@ export const store = {
 // ---------------------------------------------------------------- api
 // THE one network door. Every client call goes through api(path, opts); callers (and the server's
 // own block actions) keep writing canonical paths — '/api/board', '/app/runs.html' — and
-// resolve maps them onto wherever this copy is mounted. Standalone: '/api' + '/app/'. As a
+// resolve() maps them onto wherever this copy is mounted. Standalone: '/api' + '/app/'. As a
 // Hermes plugin: '/api/plugins/oneguy' + '/api/plugins/oneguy/app/'.
 //   api(path, opts) → fetch Response      api.get / api.post → parsed JSON (throws on !ok)
 //   api.url(path)   → the resolved URL (links, iframes, <img>)
@@ -327,7 +327,7 @@ export { api };
 
 // ---------------------------------------------------------------- the judgment ledger (one door)
 // Every decision the user makes is a judgment and goes to POST /api/judgment — not only drags. Gestures
-// that own their own moment call judge directly (cluster, nudge, reset); everything that already
+// that own their own moment call judge() directly (cluster, nudge, reset); everything that already
 // announces itself on the bus (a verb ran, a card was put away or taken back, he was steered, a
 // "next:" was answered) is logged HERE, so no new gesture can forget to.
 export function judge(kind, block, target, note) {
@@ -714,7 +714,7 @@ OneGuy.selected = [];
 // ------------------------------------------------------------------ the selection (lasso to ask)
 // The cards the user drew a box round (gestures.js), ids only, for this visit only: never stored, never
 // pixels. Every change goes through here and is announced once ('select'): the canvas outlines the
-// cards and shows the one-row menu, the talk bar's chip counts them, viewContext sends them.
+// cards and shows the one-row menu, the talk bar's chip counts them, viewContext() sends them.
 const sameIds = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
 OneGuy.select = {
   set(ids) {

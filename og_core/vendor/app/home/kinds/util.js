@@ -2,7 +2,7 @@
 // except reading window.OneGuy (the contract API).
 
 // ---------- safe HTML ----------
-// html`...` escapes every interpolated value unless it is itself html`` / raw.
+// html`...` escapes every interpolated value unless it is itself html`` / raw().
 class Raw { constructor(s) { this.s = s; } toString() { return this.s; } }
 export const raw = (s) => new Raw(String(s));
 
@@ -147,7 +147,7 @@ export const tok = (s, d = 'idle') => String(s ?? '').toLowerCase().replace(/[^a
 
 // ---------- shared face skeleton ----------
 // One DOM for every size; kinds.css shows/hides parts by [data-size] on the card
-// element, so the shell can resize a card without re-calling card.
+// element, so the shell can resize a card without re-calling card().
 export function face(block, el, o) {
   // mark the card element (classes only, prefixed kc-) so kinds.css can theme it
   [...el.classList].filter((c) => c.startsWith('kc-') || c === 'kc').forEach((c) => el.classList.remove(c));
@@ -321,7 +321,7 @@ export function briefFace(block, el, o = {}) {
 
 // ---------- the bloom ----------
 // A kind's bloom is data: sections of content. focus.js owns the header, the connections
-// strip and every control. `details` marks what goes under "behind this".
+// strip and every control. `details()` marks what goes under "behind this".
 export function details(inner) {
   return html`<div class="kb-behind">${inner}</div>`;
 }

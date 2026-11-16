@@ -624,7 +624,7 @@ async function repoint(old) {
   const seen = new Set();
   store.setView({ recent: localRecent().map((r) => (r.id === old ? { ...r, id: key } : r)).filter((r) => !seen.has(r.id) && seen.add(r.id)) });
   if (OneGuy.focused && OneGuy.focused.id === old) {
-    if (stack[stack.length - 1] === key) stack.pop();        // focus pushes it back
+    if (stack[stack.length - 1] === key) stack.pop();        // focus() pushes it back
     hopping = true;
     try { OneGuy.focus(key); } finally { hopping = false; }
   }

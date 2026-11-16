@@ -6,9 +6,13 @@
                                       op "not-now" : remembered; the offer stops asking.
 
 All logic is in app/board/mailcal.py (vendored into the plugin). The one thing this file adds is the
-runner: the subprocess call that executes the two disclosed commands
-    hermes cron create '0 7-22 * * *' '<mailcal.PROMPT>' --name 1guy-mail-cal --deliver local
+runner: the subprocess call that executes the three disclosed commands, only ever on the one
+`1guy-mail-cal` job this route created:
+    hermes cron create '0 7,12,17 * * *' '<mailcal.PROMPT>' --name 1guy-mail-cal --deliver local
+    hermes cron edit <job id> [--prompt '<mailcal.PROMPT>'] [--schedule '0 7,12,17 * * *']
     hermes cron run <job id>
+`edit` brings a job made by an older version up to date; `run` is the user's yes, or a look at a
+board whose digest is over an hour old (at most once an hour, mailcal.freshen).
 The plugin supplies its own runner the same way (mailcal.runner = ...).
 """
 import os
@@ -17,13 +21,17 @@ import subprocess
 import board as _board            # app/board/ (app/ is on sys.path under serve.py)
 from board import mailcal as _mailcal
 
-ALLOWED = (("hermes", "cron", "create"), ("hermes", "cron", "run"))
+ALLOWED = (("hermes", "cron", "create"), ("hermes", "cron", "edit"), ("hermes", "cron", "run"))
 
 
-def run(argv, timeout=60):
-    """runner(argv) -> (returncode, output). Only the two commands above ever get through."""
+def run(argv, timeout=None):
+    """runner(argv) -> (returncode, output). Only the three commands above ever get through.
+    `cron run` is synchronous (a whole agent turn), so it gets minutes, not a minute."""
     if tuple(argv[:3]) not in ALLOWED:
         return 1, "not a command this route runs"
+    if argv[2] in ("edit", "run") and (len(argv) < 4 or argv[3] != (_mailcal.find_job() or {}).get("id")):
+        return 1, "only the 1guy-mail-cal job"
+    timeout = timeout or (_mailcal.RUN_TIMEOUT_S if tuple(argv[:3]) == ("hermes", "cron", "run") else 60)
     env = dict(os.environ, HERMES_HOME=os.environ.get("HERMES_HOME") or _mailcal.hermes_home())
     try:
         p = subprocess.run(list(argv), capture_output=True, text=True, timeout=timeout, env=env,

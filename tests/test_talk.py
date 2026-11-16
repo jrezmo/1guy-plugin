@@ -76,6 +76,35 @@ def test_item_thread_runs_through_the_desktop_relay(api, home):
         t.join(timeout=5)
 
 
+def test_a_finished_cards_session_is_put_away_through_the_relay(api, home):
+    """Every opened card is a session in the user's list; once the to-do is done, the session is
+    archived (out of the list, messages kept) through the desktop's own session.archive."""
+    import sys
+    stop, seen = threading.Event(), []
+    t = threading.Thread(target=fake_desktop, args=(api, stop, seen, home), daemon=True)
+    t.start()
+    try:
+        block = next(b for b in api.get("/board").json()["blocks"] if b["kind"] == "task" and "tomatoes" in b["title"])
+        said = api.post("/surface/say", {"block_id": block["id"], "block": block, "text": "which bed?", "mode": "say"}).json()
+        poll_until_done(api, block["id"], said["run_id"])
+        key = next(iter(api.get("/threads").json()["threads"]))
+        task = next(b for b in api.get("/board?fresh=1").json()["blocks"] if b["kind"] == "task" and "tomatoes" in b["title"])
+        done = next(a for a in task["actions"] if a["id"] == "done")             # what the canvas posts
+        assert api.post("/board/task", done["body"]).status_code == 200
+        sys.modules["oneguy_routes_surface"]._tidy_state["at"] = 0.0      # the sweep is throttled to every 30 min
+        api.get("/board?fresh=1")
+        for _ in range(50):
+            if any(j["kind"] == "archive" for j in seen):
+                break
+            time.sleep(0.1)
+        arch = [j for j in seen if j["kind"] == "archive"]
+        assert arch and arch[0]["session_id"] == "sess_1" and arch[0]["archived"] is True, seen
+        assert api.get("/threads").json()["threads"][key]["surface"]["archived"] is True
+    finally:
+        stop.set()
+        t.join(timeout=5)
+
+
 def test_turn_without_a_desktop_fails_in_plain_words(api, monkeypatch):
     from og_core import talk
     monkeypatch.setattr(talk, "CLAIM_TIMEOUT", 0.5)

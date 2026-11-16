@@ -14,8 +14,10 @@ even to the README, means a new commit id and starting again from step 3.
      `STRANGER_BUILDER=<builder for a lived-in home>`
 
    Then commit.
-3. **Make the release commit.** `scripts/make_public.sh` builds the local branch `public` as a
-   single commit with the current tree, and writes `.release/SHA`, `.release/1guy.yaml` and
+3. **Make the release commit.** `PUBLIC_PARENT=gh/main scripts/make_public.sh` (after
+   `git fetch https://github.com/jrezmo/1guy-plugin.git main:refs/remotes/gh/main`) builds the
+   local branch `public` as one commit with the current tree on top of the published release, so
+   the push is a fast-forward and the commit the catalog pins today stays reachable. It writes `.release/SHA`, `.release/1guy.yaml` and
    `.release/PR.md` with that commit id filled in. Re-running it on the same tree gives the same
    id.
 4. **Test that exact commit.** `STRANGER_REF=public STRANGER_HOME=fresh tests/stranger_install.sh`

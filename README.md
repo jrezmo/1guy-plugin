@@ -134,24 +134,35 @@ everything.
   recent sessions and job output. They run in the background when cards are new or changed and
   they spend your tokens. Set `ONEGUY_HEADLINES=off` in the gateway's environment to turn the
   headline calls off; cards then show their raw titles.
-- **It starts Hermes sessions.** Talking to a card creates a normal Hermes session (visible in
-  your session list) and sends your message plus that card's context into it. The turn runs on
-  your usual agent with your usual tools and approvals. Turns are started by the desktop app
-  itself, so the board must be open in Hermes Desktop to talk to a card.
+- **It starts Hermes sessions, and puts them away.** Talking to a card creates a normal Hermes
+  session (visible in your session list) and sends your message plus that card's context into it.
+  The turn runs on your usual agent with your usual tools and approvals. Turns are started by the
+  desktop app itself, so the board must be open in Hermes Desktop to talk to a card. When the card
+  is finished (a to-do done or deleted, a suggestion answered) or its conversation has been quiet
+  for 48 hours, 1guy **archives** that session through the desktop app (`session.archive`): it
+  leaves your session list, its messages are kept, and opening the card again brings it back. At
+  most ten per half hour, never mid-reply. `ONEGUY_THREAD_IDLE_H` changes the quiet window (`0`:
+  finished cards only); `ONEGUY_THREAD_TIDY=off` turns this off. A first message that fails before
+  Hermes records anything leaves no empty session behind (it is archived the same way).
 - **Email and calendar go through your own Hermes.** 1guy never reads mail or a calendar and
   holds no account. If your Hermes has an email or calendar skill (it looks at folder names under
   `skills/` and server names under `mcp_servers:` in `config.yaml`, nothing else), he offers to
   keep an eye on them. Saying yes creates ONE scheduled Hermes job, `1guy-mail-cal`, told to read
-  only, and runs it once; the tiles and the *time* lens then show what that job last wrote. Say
+  only, that runs three times a day (07:00, 12:00, 17:00), and runs it once; the tiles and the
+  *time* lens then show what that job last wrote. Each run is a Hermes session and a model call,
+  so the schedule stays slow: when you open the board and the last read is over an hour old, he
+  asks for one fresh read (at most once an hour). Say
   *not now* and he stops asking. Without such a skill the tiles say your Hermes can't read
   email yet. The inbox lists who is waiting on a reply, oldest first, with automated mail under
   it; `later`, `not mine` and `talk about this` on an email are only notes in 1guy's own log and,
   for the first two, a small list of hidden ids (`mail_hidden.json`). Nothing is ever done to
   your mailbox.
-- **Three shell commands, each only when you ask.** *run now* on a job card runs
+- **Shell commands: `hermes cron` only.** *run now* on a job card runs
   `hermes cron run <job id>`. Saying yes to the email/calendar offer runs
-  `hermes cron create … --name 1guy-mail-cal` and then `hermes cron run <that job>`. Nothing
-  else is spawned.
+  `hermes cron create … --name 1guy-mail-cal` and then `hermes cron run <that job>`. After that,
+  only on that one job: `hermes cron run` when you open a board whose digest is over an hour old
+  (at most hourly), and `hermes cron edit` when a newer 1guy changed the job's prompt or schedule
+  (a job made by 1.0.x, hourly, is brought down to three a day). Nothing else is spawned.
 - **No network.** The plugin makes no network calls of its own and has no telemetry. The canvas
   runs in a sandboxed frame whose content policy blocks every network request; its only way out
   is a message channel to the plugin's own backend. Its pictures are carried inside the page and
@@ -168,8 +179,10 @@ its sound cues (off until you say yes) are synthesized; nothing is downloaded.
 - **Background processes.** Short-lived threads in the plugin's backend refresh card headlines
   (`ONEGUY_HEADLINES=off` stops them). *run now* on a job card starts `hermes cron run <id>` as a
   detached process that finishes on its own (its log goes to `plugin-data/1guy/logs/`). Saying yes to the email/calendar offer creates one recurring Hermes scheduled
-  job, `1guy-mail-cal` (hourly, 07:00–22:00), that keeps running until you remove it with
-  `hermes cron`. No daemon of its own, no self-update.
+  job, `1guy-mail-cal` (three times a day: 07:00, 12:00, 17:00), that keeps running until you
+  remove it with `hermes cron`; a fresh read asked for by a look at the board runs in a
+  background thread. A half-hourly sweep archives finished or quiet cards' sessions (above).
+  No daemon of its own, no self-update.
 - **No network of its own.** The backend and the canvas make no outbound calls; model calls go
   through Hermes (`ctx.llm`) and spend your tokens. There is no direct mail or calendar reader:
   email and calendar come only through your own Hermes, as described above.
@@ -221,7 +234,7 @@ the plugin backend, so the page is delivered as one document through `ctx.rest`,
 the SDK's `SandboxedFrame`, and its API calls travel over `postMessage` to the desktop half,
 which answers them with `ctx.rest`. Agent turns go the other way: the backend queues them and
 the desktop half runs them on the app's own gateway connection (`session.create`,
-`prompt.submit`, `session.interrupt`), then pushes what streams back.
+`prompt.submit`, `session.interrupt`, `session.archive`), then pushes what streams back.
 
 `og_core/vendor/` and `og_core/static/canvas.html` are generated. `static/canvas.html`
 is a readable, unminified bundle of the files in `vendor/app/home/`. To rebuild both from a
